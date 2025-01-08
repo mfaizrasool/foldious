@@ -25,7 +25,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -62,17 +65,6 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDEPMOaCeY7YyM6ENyEdl7L9G8Au6awvGY',
-    appId: '1:802280398317:ios:ba67122c33e765fdcfdbe4',
-    messagingSenderId: '802280398317',
-    projectId: 'foldious-ae650',
-    storageBucket: 'foldious-ae650.firebasestorage.app',
-    androidClientId: '802280398317-70o4469n74hpjsspln2vhi81iu0d1qm0.apps.googleusercontent.com',
-    iosClientId: '802280398317-4lhcvq0t5v8j0c5hgnmqdu96totg923r.apps.googleusercontent.com',
-    iosBundleId: 'com.foldious.storage',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDEPMOaCeY7YyM6ENyEdl7L9G8Au6awvGY',
     appId: '1:802280398317:ios:ba67122c33e765fdcfdbe4',
     messagingSenderId: '802280398317',
