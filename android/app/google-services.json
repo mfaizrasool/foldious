@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "802280398317-ieuji0sh33f76k7b8j81as29ki0bl71i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foldious.storage",
+            "certificate_hash": "739bc315d268477478a495110c1845e028f81269"
+          }
+        },
+        {
           "client_id": "802280398317-af64cap22cqlbher2c4si2tutjge9ulk.apps.googleusercontent.com",
           "client_type": 3
         }
