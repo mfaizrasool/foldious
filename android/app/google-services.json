@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "802280398317",
+    "project_id": "foldious-ae650",
+    "storage_bucket": "foldious-ae650.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:802280398317:android:35982017ca17e7cfcfdbe4",
+        "android_client_info": {
+          "package_name": "com.foldious.storage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "802280398317-70o4469n74hpjsspln2vhi81iu0d1qm0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foldious.storage",
+            "certificate_hash": "793c5f7f9ffc642a2a6d0cff6aac47483833987c"
+          }
+        },
+        {
+          "client_id": "802280398317-af64cap22cqlbher2c4si2tutjge9ulk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1E-FIcn3oT6Z0oDjziwh9wVB8bCgN0uU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "802280398317-af64cap22cqlbher2c4si2tutjge9ulk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "802280398317-4lhcvq0t5v8j0c5hgnmqdu96totg923r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.foldious.storage"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
