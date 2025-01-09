@@ -8,6 +8,7 @@ import 'package:foldious/utils/app_text_styles.dart';
 import 'package:foldious/utils/theme/constants/app_constants.dart';
 import 'package:foldious/widgets/loading_image.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
+import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:get/get.dart';
 
 class UserPage extends StatefulWidget {
@@ -30,10 +31,8 @@ class _UserPageState extends State<UserPage> {
 
     return Obx(() {
       return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            AppLabels.user,
-          ),
+        appBar: PrimaryAppBar(
+          title: AppLabels.user,
           centerTitle: true,
           actions: [
             TextButton(

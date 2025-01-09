@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:foldious/common/controllers/preference_controller.dart';
 import 'package:foldious/utils/preference_labels.dart';
 import 'package:foldious/utils/theme/theme_controller.dart';
-import 'package:flutter/material.dart';
+import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:get/get.dart';
 
 class AppearanceScreen extends StatefulWidget {
@@ -45,8 +46,8 @@ class _AppearanceScreenState extends State<AppearanceScreen> {
 
     return Scaffold(
       backgroundColor: appTheme.scaffoldBackgroundColor,
-      appBar: AppBar(
-        title: const Text('Theme Selection'),
+      appBar: PrimaryAppBar(
+        title: 'Theme Selection',
       ),
       body: Obx(() {
         final selectedTheme = themeController.selectedTheme.value;

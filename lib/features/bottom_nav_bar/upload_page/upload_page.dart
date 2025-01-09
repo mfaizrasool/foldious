@@ -3,6 +3,7 @@ import 'package:foldious/features/bottom_nav_bar/upload_page/upload_controller.d
 import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/app_text_styles.dart';
 import 'package:foldious/utils/theme/constants/app_constants.dart';
+import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:get/get.dart';
 
 class UploadPage extends StatelessWidget {
@@ -14,8 +15,8 @@ class UploadPage extends StatelessWidget {
     var height = screenSize.height;
     var width = screenSize.width;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("File Upload Progress"),
+      appBar: PrimaryAppBar(
+        title: "File Upload Progress",
         centerTitle: true,
       ),
       body: Obx(() {

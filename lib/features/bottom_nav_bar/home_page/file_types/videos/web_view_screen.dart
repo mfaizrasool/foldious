@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:foldious/common/controllers/get_files_controller.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
+import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:get/get.dart';
 
 class WebViewScreen extends StatefulWidget {
@@ -65,8 +66,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
-        appBar: AppBar(
-          title: const Text("Preview"),
+        appBar: PrimaryAppBar(
+          title: "Preview",
           centerTitle: true,
         ),
         body: controller.isLoading.value

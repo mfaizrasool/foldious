@@ -4,6 +4,7 @@ import 'package:foldious/features/bottom_nav_bar/setting_page/change_password/ch
 import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/show_snackbar.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
+import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:foldious/widgets/primary_button.dart';
 import 'package:foldious/widgets/primary_text_field.dart';
 import 'package:get/get.dart';
@@ -67,10 +68,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       },
       child: Obx(() {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              AppLabels.changePassword,
-            ),
+          appBar: PrimaryAppBar(
+            title: AppLabels.changePassword,
             centerTitle: true,
           ),
           body: Stack(

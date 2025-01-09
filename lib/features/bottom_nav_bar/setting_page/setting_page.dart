@@ -7,6 +7,7 @@ import 'package:foldious/features/bottom_nav_bar/setting_page/terms_page/terms_p
 import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/app_text_styles.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
+import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:foldious/widgets/primary_button.dart';
 import 'package:get/get.dart';
 
@@ -28,11 +29,9 @@ class _SettingPageState extends State<SettingPage> {
     double width = size.width;
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: PrimaryAppBar(
         centerTitle: true,
-        title: const Text(
-          AppLabels.setting,
-        ),
+        title: AppLabels.setting,
       ),
       body: Obx(
         () {

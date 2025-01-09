@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/terms_page/terms_controller.dart';
+import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -11,8 +12,8 @@ class TermsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Terms & Conditions"),
+      appBar: PrimaryAppBar(
+        title: "Terms & Conditions",
       ),
       body: SafeArea(
         child: Obx(

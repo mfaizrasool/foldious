@@ -8,6 +8,7 @@ import 'package:foldious/utils/theme/constants/app_constants.dart';
 import 'package:foldious/widgets/choose_photo_bottom_sheet.dart';
 import 'package:foldious/widgets/loading_image.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
+import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:foldious/widgets/primary_button.dart';
 import 'package:foldious/widgets/primary_text_field.dart';
 import 'package:get/get.dart';
@@ -78,10 +79,8 @@ class _EditUserPageState extends State<EditUserPage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            AppLabels.editUser,
-          ),
+        appBar: PrimaryAppBar(
+          title: AppLabels.editUser,
           centerTitle: true,
         ),
         body: Obx(() {

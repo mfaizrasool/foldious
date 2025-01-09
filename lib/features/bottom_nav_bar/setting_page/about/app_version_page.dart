@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/about/app_version_controller.dart';
 import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/app_text_styles.dart';
 import 'package:foldious/widgets/app_logo.dart';
-import 'package:flutter/material.dart';
+import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:get/get.dart';
 
 class AppVersionPage extends StatelessWidget {
@@ -17,8 +18,8 @@ class AppVersionPage extends StatelessWidget {
     double width = size.width;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(AppLabels.appVersion),
+      appBar: PrimaryAppBar(
+        title: AppLabels.appVersion,
         centerTitle: true,
       ),
       body: SizedBox(
