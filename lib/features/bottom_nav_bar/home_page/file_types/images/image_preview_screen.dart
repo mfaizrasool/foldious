@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foldious/common/controllers/get_files_controller.dart';
+import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/app_text_styles.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
 import 'package:get/get.dart';
@@ -65,6 +66,14 @@ class _ImagesPreviewScreenState extends State<ImagesPreviewScreen> {
                           icon: Icon(Icons.close,
                               color: appTheme.iconTheme.color, size: 24),
                         ),
+
+                        ///
+                        Text(
+                          AppLabels.images,
+                          style: AppTextStyle.bodyMedium,
+                        ),
+
+                        ///
                         IconButton(
                           onPressed: () =>
                               _showImageOptionsBottomSheet(context),
@@ -112,7 +121,7 @@ class _ImagesPreviewScreenState extends State<ImagesPreviewScreen> {
                         ),
                         Text(
                           '$currentPreviewImageNumber / ${widget.images.length}',
-                          style: appTheme.textTheme.bodyMedium,
+                          style: AppTextStyle.bodyMedium,
                         ),
                         IconButton(
                           onPressed: () {
@@ -177,8 +186,8 @@ class _ImagesPreviewScreenState extends State<ImagesPreviewScreen> {
             children: [
               Text(
                 'Image Options',
-                style: appTheme.textTheme.bodyMedium
-                    ?.copyWith(fontSize: 16, fontWeight: FontWeight.w500),
+                style: AppTextStyle.bodyMedium
+                    .copyWith(fontSize: 16, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 8.0),
               ListTile(
@@ -186,7 +195,7 @@ class _ImagesPreviewScreenState extends State<ImagesPreviewScreen> {
                     color: appTheme.iconTheme.color, size: 20),
                 title: Text(
                   'Share',
-                  style: appTheme.textTheme.bodyMedium?.copyWith(fontSize: 20),
+                  style: AppTextStyle.bodyMedium.copyWith(fontSize: 20),
                 ),
                 onTap: () async {
                   await controller
@@ -199,7 +208,7 @@ class _ImagesPreviewScreenState extends State<ImagesPreviewScreen> {
                     color: appTheme.iconTheme.color, size: 20),
                 title: Text(
                   'Download',
-                  style: appTheme.textTheme.bodyMedium?.copyWith(fontSize: 20),
+                  style: AppTextStyle.bodyMedium.copyWith(fontSize: 20),
                 ),
                 onTap: () async {
                   Get.back();

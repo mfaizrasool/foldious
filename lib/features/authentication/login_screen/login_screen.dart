@@ -49,7 +49,6 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: Obx(() {
         return Scaffold(
-          resizeToAvoidBottomInset: false,
           body: Stack(
             children: [
               SafeArea(

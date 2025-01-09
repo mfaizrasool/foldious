@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foldious/utils/app_text_styles.dart';
 
 ///
 ///
@@ -55,12 +56,12 @@ class InfoItem extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: appTheme.textTheme.titleSmall,
+                  style: AppTextStyle.titleSmall,
                 ),
                 SizedBox(height: height * 0.01),
                 Text(
                   subTitle,
-                  style: appTheme.textTheme.bodySmall,
+                  style: AppTextStyle.bodySmall,
                 ),
                 if (thirdLineText != null)
                   Column(
@@ -68,7 +69,7 @@ class InfoItem extends StatelessWidget {
                       SizedBox(height: height * 0.01),
                       Text(
                         thirdLineText!,
-                        style: appTheme.textTheme.bodySmall,
+                        style: AppTextStyle.bodySmall,
                       ),
                     ],
                   ),

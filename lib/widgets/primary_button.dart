@@ -1,5 +1,6 @@
-import 'package:foldious/utils/theme/constants/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:foldious/utils/app_text_styles.dart';
+import 'package:foldious/utils/theme/constants/app_constants.dart';
 
 class PrimaryButton extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
@@ -46,7 +47,7 @@ class PrimaryButton extends StatelessWidget {
             child: Text(
               title,
               textAlign: TextAlign.center,
-              style: appTheme.textTheme.bodyMedium?.copyWith(
+              style: AppTextStyle.bodyMedium.copyWith(
                 color: titleColor ?? AppColors.white,
                 fontWeight: FontWeight.w600,
               ),

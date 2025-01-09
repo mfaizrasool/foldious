@@ -3,6 +3,7 @@ import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/features/bottom_nav_bar/user_page/user_controller.dart';
 import 'package:foldious/utils/api_urls.dart';
 import 'package:foldious/utils/app_labels.dart';
+import 'package:foldious/utils/app_text_styles.dart';
 import 'package:foldious/utils/theme/constants/app_constants.dart';
 import 'package:foldious/widgets/choose_photo_bottom_sheet.dart';
 import 'package:foldious/widgets/loading_image.dart';
@@ -219,7 +220,7 @@ class _EditUserPageState extends State<EditUserPage> {
                           child: RichText(
                             text: TextSpan(
                               text: AppLabels.selectGender,
-                              style: appTheme.textTheme.bodyMedium?.copyWith(
+                              style: AppTextStyle.bodyMedium.copyWith(
                                 fontSize: 12.0,
                                 fontWeight: FontWeight.w600,
                               ),

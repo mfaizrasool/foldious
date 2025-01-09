@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foldious/utils/app_text_styles.dart';
 
 class ChoosePhotoBottomSheet extends StatelessWidget {
   const ChoosePhotoBottomSheet({
@@ -41,7 +42,7 @@ class ChoosePhotoBottomSheet extends StatelessWidget {
             ),
             child: Text(
               'Upload a photo',
-              style: appTheme.textTheme.bodyMedium?.copyWith(
+              style: AppTextStyle.bodyMedium.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
@@ -65,7 +66,7 @@ class ChoosePhotoBottomSheet extends StatelessWidget {
                   const SizedBox(width: 24.0),
                   Text(
                     'Choose from library',
-                    style: appTheme.textTheme.titleMedium?.copyWith(
+                    style: AppTextStyle.titleMedium.copyWith(
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -91,7 +92,7 @@ class ChoosePhotoBottomSheet extends StatelessWidget {
                   const SizedBox(width: 24.0),
                   Text(
                     'Take Photo',
-                    style: appTheme.textTheme.titleMedium?.copyWith(
+                    style: AppTextStyle.titleMedium.copyWith(
                       fontWeight: FontWeight.w400,
                     ),
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foldious/utils/app_text_styles.dart';
 import 'package:get/get.dart';
 
 class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -40,7 +41,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: titleWidget ??
           Text(
             title ?? '',
-            style: appTheme.textTheme.bodyMedium?.copyWith(
+            style: AppTextStyle.bodyMedium.copyWith(
               fontSize: 17.0,
               color: appTheme.iconTheme.color,
             ),
@@ -74,7 +75,7 @@ class PrimaryAppBar extends StatelessWidget implements PreferredSizeWidget {
                       child: Text(
                         "Edit",
                         textAlign: TextAlign.right,
-                        style: appTheme.textTheme.bodyMedium?.copyWith(
+                        style: AppTextStyle.bodyMedium.copyWith(
                           color: appTheme.primaryColor,
                           fontSize: 15.0,
                         ),

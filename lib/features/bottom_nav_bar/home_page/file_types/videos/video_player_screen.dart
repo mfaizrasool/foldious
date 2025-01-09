@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:foldious/common/controllers/get_files_controller.dart';
+import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/app_text_styles.dart';
 import 'package:foldious/utils/theme/constants/app_constants.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
+import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
@@ -65,11 +67,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     Navigator.pop(context);
   }
 
-  // Future<bool> _onWillPop() async {
-  //   await _handleBackNavigation();
-  //   return false;
-  // }
-
   @override
   Widget build(BuildContext context) {
     final appTheme = Theme.of(context);
@@ -83,12 +80,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         return;
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text(""),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: _handleBackNavigation, // Custom back button handling
-          ),
+        appBar: PrimaryAppBar(
+          title: AppLabels.videos,
+          onBackPressed: _handleBackNavigation,
           actions: [
             IconButton(
               icon: const Icon(Icons.download),
@@ -136,7 +130,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           controller.progressText.value,
-                          style: appTheme.textTheme.bodyMedium,
+                          style: AppTextStyle.bodyMedium,
                         ),
                       ),
                     ],

@@ -102,7 +102,7 @@ class _UserPageState extends State<UserPage> {
 
                     Text(
                       userDetailsController.userDetails.userContact ?? "",
-                      style: appTheme.textTheme.bodySmall?.copyWith(
+                      style: AppTextStyle.bodySmall.copyWith(
                         color: Colors.grey,
                       ),
                     ),

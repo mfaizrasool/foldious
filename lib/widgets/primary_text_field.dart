@@ -1,6 +1,7 @@
-import 'package:foldious/utils/theme/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:foldious/utils/app_text_styles.dart';
+import 'package:foldious/utils/theme/constants/app_constants.dart';
 
 class PrimaryTextField extends StatelessWidget {
   /// Creates a PrimaryTextField.
@@ -73,38 +74,32 @@ class PrimaryTextField extends StatelessWidget {
                   margin: const EdgeInsets.only(bottom: 8.0),
                   child: Row(
                     children: [
-                      Expanded(
-                        child: RichText(
-                          text: TextSpan(
-                            text: '$label',
-                            style: appTheme.textTheme.bodyMedium?.copyWith(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            children: [
-                              if (mandatory)
-                                TextSpan(
-                                  text: '*',
-                                  style:
-                                      appTheme.textTheme.bodyMedium?.copyWith(
-                                    color: AppColors.negativeColor,
-                                    fontSize: 24.0,
-                                  ),
-                                ),
-                            ],
+                      Text(
+                        label!,
+                        style: AppTextStyle.bodyMedium
+                            .copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(
+                        width: 4.0,
+                      ),
+                      if (mandatory)
+                        Text(
+                          '*',
+                          style: AppTextStyle.bodyMedium.copyWith(
+                            color: AppColors.negativeColor,
+                            fontSize: 24.0,
                           ),
                         ),
-                      ),
                     ],
                   ),
                 )
-              : const SizedBox(),
+              : Container(),
           TextField(
             onTap: onTap,
             obscureText: obscureText,
             textAlignVertical: TextAlignVertical.center,
             enabled: enable,
-            style: appTheme.textTheme.bodyMedium?.copyWith(
+            style: AppTextStyle.bodyMedium.copyWith(
               color: enable
                   ? appTheme.iconTheme.color
                   : appTheme.colorScheme.primaryContainer,
@@ -120,7 +115,7 @@ class PrimaryTextField extends StatelessWidget {
             autofocus: autoFocus,
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: appTheme.textTheme.bodySmall,
+              hintStyle: AppTextStyle.bodySmall,
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
               border: border,
@@ -209,8 +204,8 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
                     children: [
                       Text(
                         widget.label!,
-                        style: const TextStyle(
-                            fontSize: 12.0, fontWeight: FontWeight.w600),
+                        style: AppTextStyle.bodyMedium
+                            .copyWith(fontWeight: FontWeight.w600),
                       ),
                       const SizedBox(
                         width: 4.0,
@@ -218,7 +213,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
                       if (widget.mandatory)
                         Text(
                           '*',
-                          style: appTheme.textTheme.bodyMedium?.copyWith(
+                          style: AppTextStyle.bodyMedium.copyWith(
                             color: AppColors.negativeColor,
                             fontSize: 24.0,
                           ),
@@ -234,7 +229,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
                 readOnly: widget.readOnly,
                 textAlignVertical: TextAlignVertical.center,
                 enabled: widget.enable,
-                style: appTheme.textTheme.bodyMedium,
+                style: AppTextStyle.bodyMedium,
                 onChanged: widget.onChanged,
                 onTap: widget.onTap,
                 onEditingComplete: widget.onEditingComplete,
@@ -246,7 +241,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
                 keyboardType: widget.keyboardType,
                 decoration: InputDecoration(
                   hintText: widget.hintText,
-                  hintStyle: appTheme.textTheme.bodySmall,
+                  hintStyle: AppTextStyle.bodySmall,
                 ),
                 maxLines: widget.maxLines,
                 focusNode: widget.focusNode,
