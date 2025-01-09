@@ -57,23 +57,26 @@ class UserDetails {
   String? userBalance;
   String? userReferalId;
   String? createdAt;
+  String? deletedAt;
 
-  UserDetails(
-      {this.userId,
-      this.packageId,
-      this.userName,
-      this.userEmail,
-      this.userPassword,
-      this.userChannelId,
-      this.userImage,
-      this.userContact,
-      this.userAge,
-      this.userGender,
-      this.userAddress,
-      this.userVerify,
-      this.userBalance,
-      this.userReferalId,
-      this.createdAt});
+  UserDetails({
+    this.userId,
+    this.packageId,
+    this.userName,
+    this.userEmail,
+    this.userPassword,
+    this.userChannelId,
+    this.userImage,
+    this.userContact,
+    this.userAge,
+    this.userGender,
+    this.userAddress,
+    this.userVerify,
+    this.userBalance,
+    this.userReferalId,
+    this.createdAt,
+    this.deletedAt,
+  });
 
   UserDetails.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -91,6 +94,7 @@ class UserDetails {
     userBalance = json['user_balance'];
     userReferalId = json['user_referal_id'];
     createdAt = json['created_at'];
+    deletedAt = json['deleted_at'];
   }
 }
 

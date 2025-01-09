@@ -1,4 +1,5 @@
 import 'package:foldious/common/controllers/preference_controller.dart';
+import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/common/network_client/network_client.dart';
 import 'package:foldious/features/authentication/login_screen/login_model.dart';
 import 'package:foldious/features/bottom_nav_bar/bottom_nav_bar.dart';
@@ -6,11 +7,13 @@ import 'package:foldious/utils/api_urls.dart';
 import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/preference_labels.dart';
 import 'package:foldious/utils/show_snackbar.dart';
+import 'package:foldious/widgets/deleted_account_dialog.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginController extends GetxController {
   var isLoading = false.obs;
+  final UserDetailsController userDetailsController = Get.find();
 
   ///
   ///
@@ -69,7 +72,27 @@ class LoginController extends GetxController {
         key: AppPreferenceLabels.userId,
         value: loginModel.userId.toString(),
       );
-      Get.to(() => BottomNavBarScreen());
+
+      await userDetailsController.getUserDetails();
+
+      if (userDetailsController.userDetails.deletedAt != null &&
+          userDetailsController.userDetails.deletedAt!.isNotEmpty) {
+        ///
+        deletedAccountDialog();
+
+        ///
+      } else {
+        Get.off(() => BottomNavBarScreen());
+      }
+
+      ///
+      ///
+      ///
+
+      ///
+      ///
+      ///
+
       isLoading.value = false;
     } else {
       showErrorMessage(result.message ?? "Error");

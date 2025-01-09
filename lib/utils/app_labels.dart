@@ -18,6 +18,8 @@ class AppLabels {
   static const String emptyUserName = 'Please enter your name first.';
   static const String emptyPassword = 'Please enter your password.';
   static const String emailFormat = 'Email format is wrong.';
+  static const String contactUs = 'Contact us';
+  static const String cancel = 'Cancel';
 
   /* -------------------------------------------------------------------------- */
   /*                                 signup-page                                */
@@ -58,6 +60,11 @@ class AppLabels {
   static const changePassword = "Change Password";
   static const appVersion = "App Version";
   static const logoutDescription = "Are you sure you want to log out?";
+  static const deleteDescription =
+      "Are you sure you want to delete your account?";
+
+  static const deletedAccount =
+      "Account deleted. Please contact support for further assistance.";
 
   /* -------------------------------------------------------------------------- */
   /*                                Home page                                */

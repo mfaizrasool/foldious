@@ -21,6 +21,7 @@ class ApiUrls {
   static const String profileUpdate = "/authentication/profile_update.php";
   static const String userImageUpdate = "/authentication/userimage_update.php";
   static const String updatePassword = "/authentication/update_password.php";
+  static const String deleteUser = "/authentication/delete_user.php";
 
   /* -------------------------------------------------------------------------- */
   /*                                   folder                                   */
