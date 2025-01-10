@@ -34,6 +34,7 @@ class _UserPageState extends State<UserPage> {
         appBar: PrimaryAppBar(
           title: AppLabels.user,
           centerTitle: true,
+          showBackArrowIcon: false,
           actions: [
             TextButton(
               onPressed: () async {

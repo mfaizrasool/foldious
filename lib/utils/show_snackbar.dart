@@ -41,7 +41,7 @@ void showErrorMessage(
             textStyle: AppTextStyle.bodySmall.copyWith(color: AppColors.white)),
       ),
       backgroundColor: AppColors.negativeColor,
-      // dismissDirection: DismissDirection.up,
+      dismissDirection: DismissDirection.down,
     ),
   );
 }

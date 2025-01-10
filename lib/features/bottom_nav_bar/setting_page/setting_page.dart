@@ -34,6 +34,7 @@ class _SettingPageState extends State<SettingPage> {
       appBar: PrimaryAppBar(
         centerTitle: true,
         title: AppLabels.setting,
+        showBackArrowIcon: false,
       ),
       body: Obx(
         () {

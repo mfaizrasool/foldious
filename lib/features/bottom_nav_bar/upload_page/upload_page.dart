@@ -18,6 +18,7 @@ class UploadPage extends StatelessWidget {
       appBar: PrimaryAppBar(
         title: "File Upload Progress",
         centerTitle: true,
+        showBackArrowIcon: false,
       ),
       body: Obx(() {
         return Stack(
