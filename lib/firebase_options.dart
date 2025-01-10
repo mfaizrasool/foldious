@@ -74,5 +74,4 @@ class DefaultFirebaseOptions {
     iosClientId: '802280398317-4lhcvq0t5v8j0c5hgnmqdu96totg923r.apps.googleusercontent.com',
     iosBundleId: 'com.foldious.storage',
   );
-
 }
