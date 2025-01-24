@@ -17,10 +17,12 @@ class PrivacyPolicyController extends GetxController {
           onProgress: (int progress) {},
           onPageStarted: (String url) {},
           onPageFinished: (String url) {
-            // webController.runJavaScript('''
-            // document.querySelectorAll('.container-fluid').forEach(element => element.style.display = 'none');
-            // document.querySelectorAll('.row').forEach(element => element.style.display = 'none');
-            //  ''');
+            webController.runJavaScript('''
+            document.querySelectorAll('.col-md-9').forEach(element => element.style.display = 'none');
+            document.querySelectorAll('.col-md-3').forEach(element => element.style.display = 'none');
+            document.querySelectorAll('.col-md-12').forEach(element => element.style.display = 'none');
+            document.querySelectorAll('.sticky-wrapper').forEach(element => element.style.display = 'none');
+             ''');
             Future.delayed(const Duration(seconds: 1), () {
               isWebLoad.value = true;
               isLoading.value = false;
