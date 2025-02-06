@@ -8,6 +8,7 @@ import 'package:foldious/utils/theme/constants/app_constants.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
 import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:get/get.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
@@ -173,6 +174,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
                                                             FontWeight.w600,
                                                       ),
                                                     ),
+                                                    SizedBox(
+                                                        height: height * 0.01),
+                                                    TimeAgoWidget(
+                                                      dateTime: DateTime.parse(
+                                                        notification.createdAt!,
+                                                      ),
+                                                    ),
                                                   ],
                                                 ),
                                               ),
@@ -207,6 +215,22 @@ class _NotificationsPageState extends State<NotificationsPage> {
           ),
         );
       }),
+    );
+  }
+}
+
+class TimeAgoWidget extends StatelessWidget {
+  final DateTime dateTime;
+
+  const TimeAgoWidget({super.key, required this.dateTime});
+
+  @override
+  Widget build(BuildContext context) {
+    // print("dateTime == ${dateTime}");
+    // print("time ago == ${timeago.format(dateTime)}");
+    return Text(
+      timeago.format(dateTime),
+      style: AppTextStyle.bodySmall,
     );
   }
 }
