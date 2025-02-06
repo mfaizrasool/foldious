@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:foldious/common/controllers/preference_controller.dart';
 import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/common/network_client/network_client.dart';
+import 'package:foldious/features/bottom_nav_bar/setting_page/notifications/notifications_controller.dart';
 import 'package:foldious/utils/theme/theme_controller.dart';
 import 'package:foldious/widgets/internet_check_connectivity.dart';
 import 'package:get/get.dart';
@@ -27,5 +28,6 @@ BindingsBuilder createBindings(BuildContext context) {
     Get.put(InternetConnectionController(), permanent: true);
     Get.put(AppPreferencesController(), permanent: true);
     Get.put(UserDetailsController(), permanent: true);
+    Get.put(NotificationsController(), permanent: true);
   });
 }

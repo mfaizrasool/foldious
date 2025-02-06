@@ -1,8 +1,24 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:foldious/firebase_options.dart';
 import 'package:intl/intl.dart';
 
 ///
 ///
+Future<String> getToken() async {
+  try {
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+    final authToken = await FirebaseMessaging.instance.getToken();
+    print("authToken == ${authToken}");
+    return authToken ?? "";
+  } catch (e) {
+    print("Error getting token: $e");
+    return "";
+  }
+}
+
 ///
 String formatFileSize({required String? size}) {
   double kilobytes = double.parse(size ?? "0");

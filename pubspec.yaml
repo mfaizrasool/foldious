@@ -65,6 +65,9 @@ dependencies:
   archive: ^3.6.1
   open_file: ^3.5.10
   webview_flutter: ^4.10.0
+  flutter_local_notifications: ^18.0.1
+  app_settings: ^5.2.0
+  flutter_tts: ^4.2.2
  
 
 

@@ -3,6 +3,8 @@ import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/about/app_version_page.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/appearance/appearance_screen.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/change_password/change_password.dart';
+import 'package:foldious/features/bottom_nav_bar/setting_page/notifications/notifications_controller.dart';
+import 'package:foldious/features/bottom_nav_bar/setting_page/notifications/notifications_page.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/settings_controller.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/terms_page/terms_page.dart';
 import 'package:foldious/utils/app_labels.dart';
@@ -23,6 +25,7 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   final SettingsController controller = Get.put(SettingsController());
   final UserDetailsController userDetailsController = Get.find();
+  final NotificationsController notificationsController = Get.find();
   @override
   Widget build(BuildContext context) {
     final appTheme = Theme.of(context);
@@ -45,11 +48,14 @@ class _SettingPageState extends State<SettingPage> {
                     padding: EdgeInsets.symmetric(horizontal: width * 0.05),
                     child: Column(
                       children: [
-                        // PrimaryListTile(
-                        //   title: AppLabels.notifications,
-                        //   icon: Icons.notifications_none_rounded,
-                        //   onTap: () {},
-                        // ),
+                        PrimaryListTile(
+                          title:
+                              "${AppLabels.notifications}: ${notificationsController.isLoading.value ? "..." : notificationsController.notificationsModel.unreadCount == null ? "" : notificationsController.notificationsModel.unreadCount! > 9 ? "9+" : "${notificationsController.notificationsModel.unreadCount}"}",
+                          icon: Icons.notifications_none_rounded,
+                          onTap: () {
+                            Get.to(() => const NotificationsPage());
+                          },
+                        ),
 
                         ///
                         PrimaryListTile(

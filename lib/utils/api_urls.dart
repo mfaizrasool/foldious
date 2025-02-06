@@ -30,4 +30,11 @@ class ApiUrls {
   static const String dataView = "/folder/data_view.php";
   static const String fileDetails = "/folder/file_details.php";
   static const String trash = "/folder/trash.php";
+
+  /* -------------------------------------------------------------------------- */
+  /*                                notifications                               */
+  /* -------------------------------------------------------------------------- */
+  static const String getNotifications = "/notification/get_notifications.php";
+  static const String updateNotificationStatus =
+      "/notification/update_notification_status.php";
 }

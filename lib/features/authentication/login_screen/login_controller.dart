@@ -5,6 +5,7 @@ import 'package:foldious/features/authentication/login_screen/login_model.dart';
 import 'package:foldious/features/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:foldious/utils/api_urls.dart';
 import 'package:foldious/utils/app_labels.dart';
+import 'package:foldious/utils/date_formatter.dart';
 import 'package:foldious/utils/preference_labels.dart';
 import 'package:foldious/utils/show_snackbar.dart';
 import 'package:foldious/widgets/deleted_account_dialog.dart';
@@ -54,10 +55,12 @@ class LoginController extends GetxController {
     required int isSocial,
   }) async {
     isLoading.value = true;
+    String deviceToken = await getToken();
     var payload = {
       "email": email.toLowerCase(),
       "password": password,
       "social": isSocial,
+      "device_token": deviceToken,
     };
 
     final result = await Get.find<NetworkClient>().post(

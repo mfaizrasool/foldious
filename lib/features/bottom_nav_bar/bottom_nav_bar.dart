@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foldious/common/controllers/get_files_controller.dart';
 import 'package:foldious/features/bottom_nav_bar/home_page/home_page.dart';
+import 'package:foldious/features/bottom_nav_bar/setting_page/notifications/notification_setup.dart';
+import 'package:foldious/features/bottom_nav_bar/setting_page/notifications/notifications_controller.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/setting_page.dart';
 import 'package:foldious/features/bottom_nav_bar/trash/trash.dart';
 import 'package:foldious/features/bottom_nav_bar/upload_page/upload_page.dart';
@@ -22,9 +24,24 @@ class BottomNavBarScreen extends StatefulWidget {
 class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   final HomeController homeController = Get.put(HomeController());
   final FileTypeController fileTypeController = Get.put(FileTypeController());
+  final NotificationsController notificationsController = Get.find();
   @override
   void initState() {
+    notificationSetup();
     super.initState();
+  }
+
+  void notificationSetup() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      /* -------------------------------------------------------------------------- */
+      /*                             NOTIFICATION SETUP                             */
+      /* -------------------------------------------------------------------------- */
+
+      NotificationSetup().firebaseNontificationInit(context);
+      NotificationSetup().setupInteractMessages(context);
+      NotificationSetup().requestPermissions();
+      notificationsController.getNotifications();
+    });
   }
 
   @override
