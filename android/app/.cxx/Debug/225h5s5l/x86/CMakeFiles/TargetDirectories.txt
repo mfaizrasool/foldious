@@ -1,0 +1,2 @@
+/Users/muhammadfarooqiqbal/flutterprojects/faizrasool/foldious/android/app/.cxx/Debug/225h5s5l/x86/CMakeFiles/edit_cache.dir
+/Users/muhammadfarooqiqbal/flutterprojects/faizrasool/foldious/android/app/.cxx/Debug/225h5s5l/x86/CMakeFiles/rebuild_cache.dir
