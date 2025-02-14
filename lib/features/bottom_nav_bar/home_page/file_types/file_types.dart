@@ -232,24 +232,18 @@ class _FileTypesScreenState extends State<FileTypesScreen> {
                                   },
                                 ),
                               ),
+                              SizedBox(height: height * 0.1),
                               if (controller.isGettingMore.value)
-                                SizedBox(height: height * 0.04),
-                              if (controller.isGettingMore.value)
-                                SafeArea(
-                                  top: false,
-                                  child: SpinKitSpinningLines(
-                                    color: AppColors.primaryColor,
-                                    size: 50.0,
-                                  ),
+                                SpinKitSpinningLines(
+                                  color: AppColors.primaryColor,
+                                  size: 50.0,
                                 ),
                               SizedBox(height: height * 0.15),
                             ],
                           ),
                         ),
             ),
-            if (controller.fileDetailsLoading.value ||
-                controller.isGettingMore.value)
-              LoadingIndicator()
+            if (controller.fileDetailsLoading.value) LoadingIndicator()
           ],
         ),
       );
