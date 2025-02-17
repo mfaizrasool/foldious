@@ -30,20 +30,6 @@ class FileTypeModel {
       });
     }
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['total_files'] = this.totalFiles;
-    data['current_page'] = this.currentPage;
-    data['files_on_current_page'] = this.filesOnCurrentPage;
-    data['remaining_files'] = this.remainingFiles;
-    data['have_more_data'] = this.haveMoreData;
-    if (this.files != null) {
-      data['files'] = this.files!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
 }
 
 class Files {
@@ -60,21 +46,24 @@ class Files {
   String? fileDate;
   String? fileStatus;
   String? fileState;
+  String? fileDownloadPath;
 
-  Files(
-      {this.fileId,
-      this.userId,
-      this.folderKey,
-      this.fileExternalUrl,
-      this.fileName,
-      this.fileAccessKey,
-      this.fileUniqueId,
-      this.fileSize,
-      this.fileType,
-      this.fileExtension,
-      this.fileDate,
-      this.fileStatus,
-      this.fileState});
+  Files({
+    this.fileId,
+    this.userId,
+    this.folderKey,
+    this.fileExternalUrl,
+    this.fileName,
+    this.fileAccessKey,
+    this.fileUniqueId,
+    this.fileSize,
+    this.fileType,
+    this.fileExtension,
+    this.fileDate,
+    this.fileStatus,
+    this.fileState,
+    this.fileDownloadPath,
+  });
 
   Files.fromJson(Map<String, dynamic> json) {
     fileId = json['file_id'];
@@ -90,23 +79,6 @@ class Files {
     fileDate = json['file_date'];
     fileStatus = json['file_status'];
     fileState = json['file_state'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['file_id'] = this.fileId;
-    data['user_id'] = this.userId;
-    data['folder_key'] = this.folderKey;
-    data['file_external_url'] = this.fileExternalUrl;
-    data['file_name'] = this.fileName;
-    data['file_access_key'] = this.fileAccessKey;
-    data['file_unique_id'] = this.fileUniqueId;
-    data['file_size'] = this.fileSize;
-    data['file_type'] = this.fileType;
-    data['file_extension'] = this.fileExtension;
-    data['file_date'] = this.fileDate;
-    data['file_status'] = this.fileStatus;
-    data['file_state'] = this.fileState;
-    return data;
+    fileDownloadPath = json['file_download_path'];
   }
 }

@@ -12,6 +12,7 @@ import 'package:foldious/utils/file_types.dart';
 import 'package:foldious/utils/show_snackbar.dart';
 import 'package:foldious/utils/theme/constants/app_constants.dart';
 import 'package:foldious/widgets/info_items.dart';
+import 'package:foldious/widgets/loading_image.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
 import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:foldious/widgets/primary_button.dart';
@@ -168,55 +169,69 @@ class _TrashScreenState extends State<TrashScreen> {
                           child: Column(
                             children: [
                               SizedBox(height: height * 0.02),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: width * 0.06),
-                                child: ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  itemCount:
-                                      controller.allFilesPagination.length,
-                                  itemBuilder: (context, index) {
-                                    Files file =
-                                        controller.allFilesPagination[index];
+                              ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                itemCount: controller.allFilesPagination.length,
+                                itemBuilder: (context, index) {
+                                  Files file =
+                                      controller.allFilesPagination[index];
 
-                                    bool isSelected = controller.selectedFileIds
-                                        .contains(file.fileAccessKey);
+                                  bool isSelected = controller.selectedFileIds
+                                      .contains(file.fileAccessKey);
 
-                                    setData(file.fileType!);
+                                  setData(file.fileType!);
 
-                                    return GestureDetector(
-                                      onLongPress: () =>
-                                          controller.toggleSelection(
-                                        fileAccessKey: file.fileAccessKey!,
-                                      ),
-                                      onTap: controller.isSelectionMode.value
-                                          ? () => controller.toggleSelection(
-                                                fileAccessKey:
-                                                    file.fileAccessKey!,
-                                              )
-                                          : () => handleTap(file),
-                                      child: Container(
-                                        color: isSelected
-                                            ? Colors.green
-                                                .withValues(alpha: 0.2)
-                                            : Colors.transparent,
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: height * 0.008),
-                                          child: InfoItem(
-                                            leading: fileIcon,
-                                            subTitle: file.fileDate ?? "",
-                                            title: file.fileName ?? "",
-                                            trailingWidget:
-                                                Text(file.fileSize ?? ""),
-                                          ),
+                                  return GestureDetector(
+                                    onLongPress: () =>
+                                        controller.toggleSelection(
+                                      fileAccessKey: file.fileAccessKey!,
+                                    ),
+                                    onTap: controller.isSelectionMode.value
+                                        ? () => controller.toggleSelection(
+                                              fileAccessKey:
+                                                  file.fileAccessKey!,
+                                            )
+                                        : () => handleTap(file),
+                                    child: Container(
+                                      color: isSelected
+                                          ? Colors.green.withValues(alpha: 0.2)
+                                          : Colors.transparent,
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: height * 0.01,
+                                          horizontal: width * 0.06,
+                                        ),
+                                        child: InfoItem(
+                                          isLeadingPading: false,
+                                          leading: FileTypes.image ==
+                                                      file.fileType &&
+                                                  (file.fileDownloadPath !=
+                                                          null &&
+                                                      file.fileDownloadPath!
+                                                          .isNotEmpty)
+                                              ? SizedBox(
+                                                  height: height * 0.07,
+                                                  width: height * 0.07,
+                                                  child: LoadingImage(
+                                                    imageUrl:
+                                                        file.fileDownloadPath!,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                )
+                                              : fileIcon,
+
+                                          ///
+                                          subTitle: file.fileDate ?? "",
+                                          title: file.fileName ?? "",
+                                          trailingWidget:
+                                              Text(file.fileSize ?? ""),
                                         ),
                                       ),
-                                    );
-                                  },
-                                ),
+                                    ),
+                                  );
+                                },
                               ),
                               if (controller.isGettingMore.value)
                                 SizedBox(height: height * 0.04),

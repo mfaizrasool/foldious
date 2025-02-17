@@ -98,6 +98,74 @@ class _SettingPageState extends State<SettingPage> {
                           ),
 
                         ///
+                        ///
+                        PrimaryListTile(
+                          title: AppLabels.deleteAccount,
+                          icon: Icons.delete_outline,
+                          onTap: () {
+                            Get.defaultDialog(
+                              backgroundColor: appTheme.scaffoldBackgroundColor,
+                              title: "",
+                              titlePadding: EdgeInsets.zero,
+                              contentPadding:
+                                  EdgeInsets.symmetric(horizontal: 10),
+                              content: Column(
+                                children: [
+                                  Text(
+                                    AppLabels.deleteDescription,
+                                    style: AppTextStyle.bodyLarge.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(
+                                    height: 16,
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    height: 40,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 120,
+                                          height: 40,
+                                          child: PrimaryButton(
+                                            title: "Yes",
+                                            onPressed: () async {
+                                              Get.back();
+                                              await controller.deleteUser();
+                                              await controller.logout();
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Container(
+                                          width: 120,
+                                          height: 40,
+                                          child: PrimaryButton(
+                                            title: "Cancel",
+                                            titleColor: Colors.white,
+                                            backgroundColor: appTheme
+                                                .colorScheme.primaryContainer,
+                                            onPressed: () {
+                                              Get.back();
+                                            },
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+
+                        ///
                         PrimaryListTile(
                           title: AppLabels.appVersion,
                           icon: Icons.help_outline_rounded,
@@ -105,6 +173,9 @@ class _SettingPageState extends State<SettingPage> {
                             Get.to(() => AppVersionPage());
                           },
                         ),
+
+                        ///
+                        ///
 
                         ///
                         PrimaryListTile(
@@ -143,71 +214,6 @@ class _SettingPageState extends State<SettingPage> {
                                             title: "Yes",
                                             onPressed: () async {
                                               Get.back();
-                                              await controller.logout();
-                                            },
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Container(
-                                          width: 120,
-                                          height: 40,
-                                          child: PrimaryButton(
-                                            title: "Cancel",
-                                            titleColor: Colors.white,
-                                            backgroundColor: appTheme
-                                                .colorScheme.primaryContainer,
-                                            onPressed: () {
-                                              Get.back();
-                                            },
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                        PrimaryListTile(
-                          title: AppLabels.deleteAccount,
-                          icon: Icons.delete_outline,
-                          onTap: () {
-                            Get.defaultDialog(
-                              backgroundColor: appTheme.scaffoldBackgroundColor,
-                              title: "",
-                              titlePadding: EdgeInsets.zero,
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 10),
-                              content: Column(
-                                children: [
-                                  Text(
-                                    AppLabels.deleteDescription,
-                                    style: AppTextStyle.bodyLarge.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SizedBox(
-                                    height: 16,
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    height: 40,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: 120,
-                                          height: 40,
-                                          child: PrimaryButton(
-                                            title: "Yes",
-                                            onPressed: () async {
-                                              Get.back();
-                                              await controller.deleteUser();
                                               await controller.logout();
                                             },
                                           ),

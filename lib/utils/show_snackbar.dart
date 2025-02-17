@@ -14,13 +14,14 @@ void showSuccessMessage(
   final s = messengerState ?? ScaffoldMessenger.of(Get.context!);
   s.showSnackBar(
     SnackBar(
+      duration: const Duration(milliseconds: 500),
       content: Text(
         message,
         style: GoogleFonts.nunitoSans(
             textStyle: AppTextStyle.bodySmall.copyWith(color: AppColors.white)),
       ),
       backgroundColor: AppColors.primaryColor,
-      // dismissDirection: DismissDirection.up,
+      dismissDirection: DismissDirection.down,
     ),
   );
 }
@@ -35,6 +36,7 @@ void showErrorMessage(
   final s = messengerState ?? ScaffoldMessenger.of(Get.context!);
   s.showSnackBar(
     SnackBar(
+      duration: const Duration(milliseconds: 500),
       content: Text(
         message,
         style: GoogleFonts.nunitoSans(

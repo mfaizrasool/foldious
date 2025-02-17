@@ -12,6 +12,7 @@ import 'package:foldious/utils/file_types.dart';
 import 'package:foldious/utils/show_snackbar.dart';
 import 'package:foldious/utils/theme/constants/app_constants.dart';
 import 'package:foldious/widgets/info_items.dart';
+import 'package:foldious/widgets/loading_image.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
 import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:get/get.dart';
@@ -36,10 +37,12 @@ class _FileTypesScreenState extends State<FileTypesScreen> {
   @override
   void initState() {
     super.initState();
+
     setData(widget.fileType);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.allFilesPagination.clear();
+      controller.isSelectionMode.value = false;
       controller.currentPage.value = 1;
       controller.getPublishFiles(
         showpaginationLoader: false,
@@ -146,17 +149,10 @@ class _FileTypesScreenState extends State<FileTypesScreen> {
                 icon: const Icon(Icons.delete),
                 onPressed: () async {
                   print("Selected IDs: ${controller.selectedFileIds}");
-
                   await controller.manageFiles(
                     status: FileStatus.trash,
                     fileType: widget.fileType,
                   );
-
-                  // await controller.trashFiles();
-                  // await controller.getPublishFiles(
-                  //   showpaginationLoader: false,
-                  //   fileType: widget.fileType,
-                  // );
                 },
               ),
             if (controller.isSelectionMode.value)
@@ -184,53 +180,65 @@ class _FileTypesScreenState extends State<FileTypesScreen> {
                           child: Column(
                             children: [
                               SizedBox(height: height * 0.02),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: width * 0.06),
-                                child: ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  itemCount:
-                                      controller.allFilesPagination.length,
-                                  itemBuilder: (context, index) {
-                                    Files file =
-                                        controller.allFilesPagination[index];
+                              ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                itemCount: controller.allFilesPagination.length,
+                                itemBuilder: (context, index) {
+                                  Files file =
+                                      controller.allFilesPagination[index];
+                                  bool isSelected = controller.selectedFileIds
+                                      .contains(file.fileAccessKey);
+                                  return GestureDetector(
+                                    onLongPress: () =>
+                                        controller.toggleSelection(
+                                      fileAccessKey: file.fileAccessKey!,
+                                    ),
+                                    onTap: controller.isSelectionMode.value
+                                        ? () => controller.toggleSelection(
+                                              fileAccessKey:
+                                                  file.fileAccessKey!,
+                                            )
+                                        : () => handleTap(file),
+                                    child: Container(
+                                      color: isSelected
+                                          ? Colors.green.withValues(alpha: 0.2)
+                                          : Colors.transparent,
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical: height * 0.01,
+                                          horizontal: width * 0.06,
+                                        ),
+                                        child: InfoItem(
+                                          isLeadingPading: false,
+                                          leading: FileTypes.image ==
+                                                      file.fileType &&
+                                                  (file.fileDownloadPath !=
+                                                          null &&
+                                                      file.fileDownloadPath!
+                                                          .isNotEmpty)
+                                              ? SizedBox(
+                                                  height: height * 0.07,
+                                                  width: height * 0.07,
+                                                  child: LoadingImage(
+                                                    imageUrl:
+                                                        file.fileDownloadPath!,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                )
+                                              : fileIcon,
 
-                                    bool isSelected = controller.selectedFileIds
-                                        .contains(file.fileAccessKey);
-
-                                    return GestureDetector(
-                                      onLongPress: () =>
-                                          controller.toggleSelection(
-                                        fileAccessKey: file.fileAccessKey!,
-                                      ),
-                                      onTap: controller.isSelectionMode.value
-                                          ? () => controller.toggleSelection(
-                                                fileAccessKey:
-                                                    file.fileAccessKey!,
-                                              )
-                                          : () => handleTap(file),
-                                      child: Container(
-                                        color: isSelected
-                                            ? Colors.green
-                                                .withValues(alpha: 0.2)
-                                            : Colors.transparent,
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: height * 0.008),
-                                          child: InfoItem(
-                                            leading: fileIcon,
-                                            subTitle: file.fileDate ?? "",
-                                            title: file.fileName ?? "",
-                                            trailingWidget:
-                                                Text(file.fileSize ?? ""),
-                                          ),
+                                          ///
+                                          subTitle: file.fileDate ?? "",
+                                          title: file.fileName ?? "",
+                                          trailingWidget:
+                                              Text(file.fileSize ?? ""),
                                         ),
                                       ),
-                                    );
-                                  },
-                                ),
+                                    ),
+                                  );
+                                },
                               ),
                               SizedBox(height: height * 0.1),
                               if (controller.isGettingMore.value)

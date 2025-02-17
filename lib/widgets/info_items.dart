@@ -14,6 +14,7 @@ class InfoItem extends StatelessWidget {
     this.thirdLineText,
     this.trailingWidget,
     this.leadingIconSize = 24.0,
+    this.isLeadingPading = true,
   });
 
   final VoidCallback? onPressed;
@@ -24,6 +25,7 @@ class InfoItem extends StatelessWidget {
   final String? thirdLineText;
   final Widget? trailingWidget;
   final double leadingIconSize;
+  final bool? isLeadingPading;
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +41,16 @@ class InfoItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
+            height: height * 0.07,
+            width: height * 0.07,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: appTheme.colorScheme.secondaryContainer,
             ),
+            clipBehavior: Clip.hardEdge,
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: EdgeInsets.all(isLeadingPading == true ? 12.0 : 0),
               child: leading,
             ),
           ),
@@ -57,6 +62,8 @@ class InfoItem extends StatelessWidget {
                 Text(
                   title,
                   style: AppTextStyle.titleSmall,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 SizedBox(height: height * 0.01),
                 Text(
