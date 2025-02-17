@@ -6,6 +6,7 @@ import 'package:foldious/common/models/file_type_model.dart';
 import 'package:foldious/features/bottom_nav_bar/home_page/file_types/images/image_preview_screen.dart';
 import 'package:foldious/features/bottom_nav_bar/home_page/file_types/videos/video_player_screen.dart';
 import 'package:foldious/features/bottom_nav_bar/home_page/file_types/videos/web_view_screen.dart';
+import 'package:foldious/utils/api_urls.dart';
 import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/app_text_styles.dart';
 import 'package:foldious/utils/file_types.dart';
@@ -91,8 +92,7 @@ class _FileTypesScreenState extends State<FileTypesScreen> {
       case FileTypes.video:
         var result = await Get.to(
           () => WebViewScreen(
-            url:
-                "https://foldious.com/downloader.php?file_access_key=${file.fileAccessKey}",
+            url: "${ApiUrls.webViewVideoPath}${file.fileAccessKey}",
           ),
         );
         if (result != null) {

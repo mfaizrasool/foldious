@@ -1,6 +1,8 @@
 class ApiUrls {
   static const String baseUrl = "https://foldious.com/api";
-  static const String counterUpload = "https://foldious.com/counter-upload.php";
+  static const String counterUpload =
+      "https://drive.foldious.com/counter-upload.php";
+  static const String profilePath = "https://foldious.com/api/dp/";
 
   ///
   ///
@@ -10,7 +12,9 @@ class ApiUrls {
   static const String dowloadUrl =
       "https://api.telegram.org/file/bot$botToken/";
 
-  static const String profilePath = "https://foldious.com/api/dp/";
+  ///
+  static const String webViewVideoPath =
+      "https://drive.foldious.com/downloader.php?file_access_key=";
 
   ///
   static const String login = "/authentication/login.php";
