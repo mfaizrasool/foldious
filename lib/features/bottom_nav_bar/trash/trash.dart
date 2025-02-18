@@ -86,7 +86,7 @@ class _TrashScreenState extends State<TrashScreen> {
       case FileTypes.video:
         var result = await Get.to(
           () => WebViewScreen(
-            url: "${ApiUrls.webViewVideoPath}${file.fileAccessKey}",
+            url: "${ApiUrls.webViewVideoPath}${file.fileAccessKey}&download=1",
           ),
         );
         if (result != null) {

@@ -92,7 +92,7 @@ class _FileTypesScreenState extends State<FileTypesScreen> {
       case FileTypes.video:
         var result = await Get.to(
           () => WebViewScreen(
-            url: "${ApiUrls.webViewVideoPath}${file.fileAccessKey}",
+            url: "${ApiUrls.webViewVideoPath}${file.fileAccessKey}&download=1",
           ),
         );
         if (result != null) {
@@ -231,7 +231,7 @@ class _FileTypesScreenState extends State<FileTypesScreen> {
 
                                           ///
                                           subTitle: file.fileDate ?? "",
-                                          title: file.fileName ?? "",
+                                          title: file.fileName!.split("_").last,
                                           trailingWidget:
                                               Text(file.fileSize ?? ""),
                                         ),
