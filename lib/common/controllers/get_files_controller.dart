@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +18,7 @@ import 'package:share_plus/share_plus.dart';
 
 class FileTypeController extends GetxController {
   var isLoading = false.obs;
+  var isDownloading = false.obs;
   var isGettingMore = false.obs;
   var fileDetailsLoading = false.obs;
   var currentPage = 1.obs;
@@ -318,10 +318,10 @@ class FileTypeController extends GetxController {
   /* -------------------------------------------------------------------------- */
   /*                                handle images                               */
   /* -------------------------------------------------------------------------- */
-  ///
-  Future<void> downloadNetworkImage(String fileUrl) async {
+  Future<void> downloadNetworkImage(
+      {required String fileUrl, required bool isSharing}) async {
     try {
-      isLoading.value = true;
+      isDownloading.value = true;
       downloadProgress.value = 0.0;
       progressText.value = "0 MB / 0 MB";
 
@@ -329,7 +329,6 @@ class FileTypeController extends GetxController {
         fileUrl,
         options: Options(responseType: ResponseType.bytes),
         onReceiveProgress: (received, total) {
-          // Update download progress and text
           if (total != -1) {
             downloadProgress.value = received / total;
             progressText.value =
@@ -338,17 +337,59 @@ class FileTypeController extends GetxController {
         },
       );
 
-      await ImageGallerySaverPlus.saveImage(
-        Uint8List.fromList(response.data),
-        quality: 60,
-        name: fileUrl.split("/").last,
-      );
+      // Save to temporary directory
+      final tempDir = await getTemporaryDirectory();
+      final filePath = "${tempDir.path}/${fileUrl.split('/').last}";
+      File file = File(filePath);
+      await file.writeAsBytes(response.data);
+
+      // Save to gallery
+      await ImageGallerySaverPlus.saveFile(filePath);
+
+      // Share file
+      if (isSharing == true) await Share.shareXFiles([XFile(filePath)]);
     } finally {
-      isLoading.value = false;
+      isDownloading.value = false;
       downloadProgress.value = 0.0;
       progressText.value = "";
     }
   }
+
+  ///
+  // Future<void> downloadNetworkImage(String fileUrl) async {
+  //   try {
+  //     isDownloading.value = true;
+  //     downloadProgress.value = 0.0;
+  //     progressText.value = "0 MB / 0 MB";
+
+  //     var response = await Dio().get(
+  //       fileUrl,
+  //       options: Options(responseType: ResponseType.bytes),
+  //       onReceiveProgress: (received, total) {
+  //         // Update download progress and text
+  //         if (total != -1) {
+  //           downloadProgress.value = received / total;
+  //           progressText.value =
+  //               "${(received / (1024 * 1024)).toStringAsFixed(1)} MB / ${(total / (1024 * 1024)).toStringAsFixed(1)} MB";
+  //         }
+  //       },
+  //     );
+
+  //     await ImageGallerySaverPlus.saveImage(
+  //       Uint8List.fromList(response.data),
+  //       quality: 60,
+  //       name: fileUrl.split("/").last,
+  //     );
+
+  //     await Share.shareXFiles(files)
+  //   } finally {
+  //     isLoading.value = true;
+  //     isLoading.value = false;
+  //     isDownloading.value = false;
+  //     downloadProgress.value = 0.0;
+  //     progressText.value = "";
+  //   }
+  // }
 
   Future<void> shareImageButton(String imageUrl) async {
     await Share.share(imageUrl);
@@ -358,7 +399,7 @@ class FileTypeController extends GetxController {
   /*                               download video                               */
   /* -------------------------------------------------------------------------- */
   Future<void> saveNetworkVideoFile(String fileUrl) async {
-    isLoading.value = true;
+    isDownloading.value = true;
     downloadProgress.value = 0.0;
     progressText.value = "0 MB / 0 MB";
 
@@ -383,7 +424,9 @@ class FileTypeController extends GetxController {
     } finally {
       downloadProgress.value = 0.0;
       progressText.value = "";
+      isLoading.value = true;
       isLoading.value = false;
+      isDownloading.value = false;
     }
   }
 

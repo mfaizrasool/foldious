@@ -83,6 +83,17 @@ class _ImagesPreviewScreenState extends State<ImagesPreviewScreen> {
                       ],
                     ),
                   ),
+                  if (controller.progressText.value.isNotEmpty) ...[
+                    LinearProgressIndicator(
+                        value: controller.downloadProgress.value),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        controller.progressText.value,
+                        style: AppTextStyle.bodyMedium,
+                      ),
+                    ),
+                  ],
                   // PhotoViewGallery for displaying images
                   Expanded(
                     child: PhotoViewGallery.builder(
@@ -138,17 +149,6 @@ class _ImagesPreviewScreenState extends State<ImagesPreviewScreen> {
                       ],
                     ),
                   ),
-                  if (controller.progressText.value.isNotEmpty) ...[
-                    LinearProgressIndicator(
-                        value: controller.downloadProgress.value),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        controller.progressText.value,
-                        style: AppTextStyle.bodyMedium,
-                      ),
-                    ),
-                  ],
                 ],
               ),
               if (controller.isLoading.value) const LoadingIndicator()
@@ -198,9 +198,11 @@ class _ImagesPreviewScreenState extends State<ImagesPreviewScreen> {
                   style: AppTextStyle.bodyMedium.copyWith(fontSize: 20),
                 ),
                 onTap: () async {
-                  await controller
-                      .shareImageButton(widget.images[currentIndex]);
                   Get.back();
+                  await controller.downloadNetworkImage(
+                    fileUrl: widget.images[currentIndex],
+                    isSharing: true,
+                  );
                 },
               ),
               ListTile(
@@ -212,8 +214,10 @@ class _ImagesPreviewScreenState extends State<ImagesPreviewScreen> {
                 ),
                 onTap: () async {
                   Get.back();
-                  await controller
-                      .downloadNetworkImage(widget.images[currentIndex]);
+                  await controller.downloadNetworkImage(
+                    fileUrl: widget.images[currentIndex],
+                    isSharing: false,
+                  );
                 },
               ),
             ],
