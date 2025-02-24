@@ -69,6 +69,7 @@ dependencies:
   app_settings: ^5.2.0
   flutter_tts: ^4.2.2
   timeago: ^3.7.0
+  sign_in_with_apple: ^6.1.2
  
 
 

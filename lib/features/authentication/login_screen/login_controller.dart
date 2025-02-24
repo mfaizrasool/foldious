@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:foldious/common/controllers/preference_controller.dart';
 import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/common/network_client/network_client.dart';
+import 'package:foldious/features/authentication/login_screen/auth_service.dart';
 import 'package:foldious/features/authentication/login_screen/login_model.dart';
 import 'package:foldious/features/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:foldious/utils/api_urls.dart';
@@ -119,6 +121,33 @@ class LoginController extends GetxController {
     } catch (e) {
       print("error ${e.toString()}");
       showErrorMessage(e.toString());
+    }
+  }
+
+  ///
+  ///
+  ///
+  Future<void> appleSignIn() async {
+    UserCredential? userCredential;
+    isLoading.value = true;
+    try {
+      userCredential = await AuthRepo().signInWithApple();
+      isLoading.value = false;
+    } on FirebaseAuthException catch (exception) {
+      isLoading.value = false;
+
+      print('FirebaseAuthException: ${exception.message}');
+      return;
+    } catch (error) {
+      isLoading.value = false;
+      showErrorMessage("Error login with Apple.");
+      print('Error in Apple Sign-In: $error');
+      return;
+    }
+    if (userCredential != null) {
+      await login(email: userCredential.user!.email!, isSocial: 1);
+    } else {
+      print("Sign-in failed, but no exception was thrown.");
     }
   }
 }

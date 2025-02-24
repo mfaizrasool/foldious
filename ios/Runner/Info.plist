@@ -45,5 +45,32 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<!-- permissions -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need access to your microphone for audio recording.</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library so you can easily upload photos and images to your cloud storage from your device.</string>
+
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to your photo library to save any files or images you upload to your cloud storage for easy access.</string>
+
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need access to your microphone to allow you to record audio files and upload them directly to your cloud storage.</string>
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to help organize and categorize files based on your location, providing personalized content and services.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+	<string>location</string>
+	</array>
+
+	<!-- video -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+	<key>NSAllowsArbitraryLoads</key>
+	<true/>
+	</dict>
+
 </dict>
 </plist>

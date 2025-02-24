@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:foldious/features/authentication/forgot/forgot_screen.dart';
 import 'package:foldious/features/authentication/login_screen/login_controller.dart';
@@ -150,6 +152,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           ],
                         ),
                         SizedBox(height: height * 0.04),
+
+                        ///
+                        if (Platform.isIOS)
+                          SocialButtons(
+                            title: "Sign in with Apple",
+                            image:
+                                "https://pngimg.com/uploads/apple_logo/apple_logo_PNG19666.png",
+                            onTap: () async {
+                              controller.appleSignIn();
+                            },
+                          ),
+                        if (Platform.isIOS) SizedBox(height: height * 0.02),
 
                         ///
                         SocialButtons(
