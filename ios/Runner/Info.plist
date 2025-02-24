@@ -58,11 +58,19 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need access to your microphone to allow you to record audio files and upload them directly to your cloud storage.</string>
 
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need your location to help organize and categorize files based on your location, providing personalized content and services.</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>We need access to your Music to save any music files you upload to your cloud storage for easy access.</string>
+
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
+	
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+
 	<key>UIBackgroundModes</key>
 	<array>
-	<string>location</string>
+		<string>fetch</string>
+		<string>remote-notification</string>
 	</array>
 
 	<!-- video -->
