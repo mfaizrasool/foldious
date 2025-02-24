@@ -1,0 +1,2 @@
+C:/flutter_project/foldious/android/app/.cxx/RelWithDebInfo/2n3l5s2q/x86_64/CMakeFiles/edit_cache.dir
+C:/flutter_project/foldious/android/app/.cxx/RelWithDebInfo/2n3l5s2q/x86_64/CMakeFiles/rebuild_cache.dir
