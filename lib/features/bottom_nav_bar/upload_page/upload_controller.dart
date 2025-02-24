@@ -6,6 +6,7 @@ import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/common/network_client/network_client.dart';
 import 'package:foldious/utils/api_urls.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class FileUploadStatus {
   final String fileName;
@@ -33,48 +34,57 @@ class UploadController extends GetxController {
   final UserDetailsController userDetailsController = Get.find();
 
   void selectFiles() async {
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        allowMultiple: true,
-        type: FileType.any, // Changed to FileType.any to allow all file types
-      );
-
-      if (result != null) {
-        isLoading.value = true;
-        selectedFiles.clear();
-        currentFileIndex.value = 0;
-
-        // Initialize files with pending status
-        selectedFiles.addAll(
-          result.files.map((file) => FileUploadStatus(
-                fileName: file.name,
-                initialProgress: 0.0,
-              )),
+    PermissionStatus status = await Permission.photos.request();
+    if (status.isPermanentlyDenied) {
+      // Open settings to manually enable access
+      openAppSettings();
+    } else if (status.isDenied) {
+      openAppSettings();
+    } else {
+      try {
+        print("Photo Library Access Granted");
+        FilePickerResult? result = await FilePicker.platform.pickFiles(
+          allowMultiple: true,
+          type: FileType.any, // Changed to FileType.any to allow all file types
         );
 
-        // Upload files sequentially
-        for (int i = 0; i < result.files.length; i++) {
-          currentFileIndex.value = i;
-          selectedFiles[i].status.value = "Uploading...";
+        if (result != null) {
+          isLoading.value = true;
+          selectedFiles.clear();
+          currentFileIndex.value = 0;
 
-          // Update previous file status if exists
-          if (i > 0) {
-            selectedFiles[i - 1].status.value = "Completed";
+          // Initialize files with pending status
+          selectedFiles.addAll(
+            result.files.map((file) => FileUploadStatus(
+                  fileName: file.name,
+                  initialProgress: 0.0,
+                )),
+          );
+
+          // Upload files sequentially
+          for (int i = 0; i < result.files.length; i++) {
+            currentFileIndex.value = i;
+            selectedFiles[i].status.value = "Uploading...";
+
+            // Update previous file status if exists
+            if (i > 0) {
+              selectedFiles[i - 1].status.value = "Completed";
+            }
+
+            await _uploadFile(i, result.files[i]);
           }
 
-          await _uploadFile(i, result.files[i]);
-        }
+          // Update last file status
+          if (selectedFiles.isNotEmpty) {
+            selectedFiles.last.status.value = "Completed";
+          }
 
-        // Update last file status
-        if (selectedFiles.isNotEmpty) {
-          selectedFiles.last.status.value = "Completed";
+          isLoading.value = false;
         }
-
+      } catch (e) {
         isLoading.value = false;
+        print("Error selecting files: $e");
       }
-    } catch (e) {
-      isLoading.value = false;
-      print("Error selecting files: $e");
     }
   }
 
@@ -156,7 +166,7 @@ class UploadController extends GetxController {
       ),
       "UserId": userDetailsController.userDetails.userId,
       "FolderId": userDetailsController.folderDetails.folderKey,
-      "UserChannelId" : userDetailsController.userDetails.userChannelId
+      "UserChannelId": userDetailsController.userDetails.userChannelId
     });
 
     print(

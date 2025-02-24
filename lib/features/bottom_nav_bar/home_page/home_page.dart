@@ -10,6 +10,7 @@ import 'package:foldious/utils/date_formatter.dart';
 import 'package:foldious/utils/file_types.dart';
 import 'package:foldious/utils/theme/constants/app_constants.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
+import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:foldious/widgets/primary_linear_progress.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -34,6 +35,9 @@ class _HomePageState extends State<HomePage> {
 
     return Obx(() {
       return Scaffold(
+        appBar: PrimaryAppBar(
+          title: userDetailsController.userDetails.userName ?? "",
+        ),
         body: SafeArea(
           bottom: false,
           child: controller.isLoading.value ||
