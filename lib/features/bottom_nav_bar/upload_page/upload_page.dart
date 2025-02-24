@@ -28,21 +28,13 @@ class UploadPage extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    // ElevatedButton(
-                    //   onPressed: controller.isLoading.value
-                    //       ? null
-                    //       : controller.selectFiles,
-                    //   child: Text(
-                    //     controller.isLoading.value
-                    //         ? "Uploading..."
-                    //         : "Select Files",
-                    //   ),
-                    // ),
                     Center(
                       child: GestureDetector(
-                        onTap: controller.isLoading.value
-                            ? null
-                            : controller.selectFiles,
+                        onTap: () {
+                          controller.isLoading.value
+                              ? null
+                              : _showBottomSheet(context);
+                        },
                         child: Container(
                           width: width,
                           height: height * 0.15,
@@ -178,5 +170,107 @@ class UploadPage extends StatelessWidget {
       default:
         return Colors.blue;
     }
+  }
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => FilesBottomSheet(onImagesPressed: () {
+        Get.back();
+        Navigator.pop(context);
+        controller.selectImagesAndVideos();
+      }, onFilesPressed: () {
+        Navigator.pop(context);
+        controller.selectFiles();
+      }),
+    );
+  }
+}
+
+class FilesBottomSheet extends StatelessWidget {
+  const FilesBottomSheet({
+    super.key,
+    required this.onImagesPressed,
+    required this.onFilesPressed,
+  });
+
+  final VoidCallback onImagesPressed;
+  final VoidCallback onFilesPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final appTheme = Theme.of(context);
+    return Container(
+      padding: const EdgeInsets.only(
+        bottom: 16.0,
+      ),
+      decoration: BoxDecoration(
+        color: appTheme.colorScheme.secondaryContainer,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24.0),
+          topRight: Radius.circular(24.0),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          const SizedBox(height: 8.0),
+          InkWell(
+            onTap: onImagesPressed,
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 12.0,
+              ),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.now_wallpaper_sharp,
+                    size: 24.0,
+                    color: appTheme.iconTheme.color,
+                  ),
+                  const SizedBox(width: 24.0),
+                  Text(
+                    'Photos and Videos',
+                    style: AppTextStyle.titleMedium.copyWith(
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: onFilesPressed,
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 12.0,
+              ),
+              width: double.infinity,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.more_horiz_rounded,
+                    size: 24.0,
+                    color: appTheme.iconTheme.color,
+                  ),
+                  const SizedBox(width: 24.0),
+                  Text(
+                    'Browse',
+                    style: AppTextStyle.titleMedium.copyWith(
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 120),
+        ],
+      ),
+    );
   }
 }

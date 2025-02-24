@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:dio/dio.dart' as dio;
@@ -6,6 +7,7 @@ import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/common/network_client/network_client.dart';
 import 'package:foldious/utils/api_urls.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class FileUploadStatus {
@@ -34,18 +36,17 @@ class UploadController extends GetxController {
   final UserDetailsController userDetailsController = Get.find();
 
   void selectFiles() async {
-    PermissionStatus status = await Permission.photos.request();
+    PermissionStatus status = await Permission.storage.request();
     if (status.isPermanentlyDenied) {
-      // Open settings to manually enable access
       openAppSettings();
     } else if (status.isDenied) {
       openAppSettings();
     } else {
       try {
-        print("Photo Library Access Granted");
+        print("Storage Access Granted");
         FilePickerResult? result = await FilePicker.platform.pickFiles(
           allowMultiple: true,
-          type: FileType.any, // Changed to FileType.any to allow all file types
+          type: FileType.any,
         );
 
         if (result != null) {
@@ -53,7 +54,6 @@ class UploadController extends GetxController {
           selectedFiles.clear();
           currentFileIndex.value = 0;
 
-          // Initialize files with pending status
           selectedFiles.addAll(
             result.files.map((file) => FileUploadStatus(
                   fileName: file.name,
@@ -61,20 +61,17 @@ class UploadController extends GetxController {
                 )),
           );
 
-          // Upload files sequentially
           for (int i = 0; i < result.files.length; i++) {
             currentFileIndex.value = i;
             selectedFiles[i].status.value = "Uploading...";
 
-            // Update previous file status if exists
             if (i > 0) {
               selectedFiles[i - 1].status.value = "Completed";
             }
 
-            await _uploadFile(i, result.files[i]);
+            await _uploadFile(i, File(result.files[i].path!));
           }
 
-          // Update last file status
           if (selectedFiles.isNotEmpty) {
             selectedFiles.last.status.value = "Completed";
           }
@@ -88,27 +85,67 @@ class UploadController extends GetxController {
     }
   }
 
-  Future<void> _uploadFile(int index, PlatformFile file) async {
-    try {
-      final filePath = file.path;
-      if (filePath == null) {
-        selectedFiles[index].status.value = "Error: No file path";
-        return;
+  void selectImagesAndVideos() async {
+    PermissionStatus status = await Permission.photos.request();
+    if (status.isPermanentlyDenied) {
+      openAppSettings();
+    } else if (status.isDenied) {
+      openAppSettings();
+    } else {
+      try {
+        print("Photo Library Access Granted");
+        final ImagePicker picker = ImagePicker();
+        List<XFile>? pickedFiles = await picker.pickMultipleMedia();
+
+        if (pickedFiles.isNotEmpty) {
+          isLoading.value = true;
+          selectedFiles.clear();
+          currentFileIndex.value = 0;
+
+          selectedFiles.addAll(
+            pickedFiles.map((file) => FileUploadStatus(
+                  fileName: file.name,
+                  initialProgress: 0.0,
+                )),
+          );
+
+          for (int i = 0; i < pickedFiles.length; i++) {
+            currentFileIndex.value = i;
+            selectedFiles[i].status.value = "Uploading...";
+
+            if (i > 0) {
+              selectedFiles[i - 1].status.value = "Completed";
+            }
+
+            await _uploadFile(i, File(pickedFiles[i].path));
+          }
+
+          if (selectedFiles.isNotEmpty) {
+            selectedFiles.last.status.value = "Completed";
+          }
+
+          isLoading.value = false;
+        }
+      } catch (e) {
+        isLoading.value = false;
+        print("Error selecting files: $e");
       }
+    }
+  }
 
-      final int fileLength = file.size;
-      const int chunkSize = 1 * 1024 * 1024; // 1MB chunks
+  Future<void> _uploadFile(int index, File file) async {
+    try {
+      final fileLength = file.lengthSync();
+      const int chunkSize = 1 * 1024 * 1024;
       final int totalChunks = (fileLength / chunkSize).ceil();
-
       int bytesUploaded = 0;
       int currentChunkIndex = 0;
 
-      final fileStream = dio.MultipartFile.fromFileSync(filePath).finalize();
+      final fileStream = file.openRead();
       List<int> buffer = [];
 
       await for (final data in fileStream) {
         buffer.addAll(data);
-
         while (buffer.length >= chunkSize ||
             bytesUploaded + buffer.length == fileLength) {
           final currentChunkSize = math.min(chunkSize, buffer.length);
@@ -116,35 +153,25 @@ class UploadController extends GetxController {
           buffer = buffer.sublist(currentChunkSize);
 
           bytesUploaded += currentChunkSize;
-
-          // Update progress
-          final progress = bytesUploaded / fileLength;
           final sentMB = bytesUploaded / (1024 * 1024);
           final totalMB = fileLength / (1024 * 1024);
 
-          selectedFiles[index].progress.value = progress;
+          selectedFiles[index].progress.value = bytesUploaded / fileLength;
           selectedFiles[index].progressLabel.value =
               "${sentMB.toStringAsFixed(2)} MB / ${totalMB.toStringAsFixed(2)} MB";
 
-          // Upload chunk using the consistent uniqueFileName
-          await _uploadChunk(
-            index,
-            chunk,
-            currentChunkIndex,
-            totalChunks,
-          );
+          await _uploadChunk(index, chunk, currentChunkIndex, totalChunks);
 
           currentChunkIndex++;
-
           if (bytesUploaded >= fileLength) break;
         }
       }
 
       selectedFiles[index].isUploaded.value = true;
-      selectedFiles[index].progress.value = 1.0;
+      selectedFiles[index].status.value = "Completed";
     } catch (e) {
       selectedFiles[index].status.value = "Error: ${e.toString()}";
-      print("Error uploading file ${file.name}: $e");
+      print("Error uploading file ${file.path}: $e");
     }
   }
 
