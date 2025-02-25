@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:foldious/features/bottom_nav_bar/upload_page/upload_controller.dart';
 import 'package:foldious/utils/app_labels.dart';
@@ -33,7 +35,9 @@ class UploadPage extends StatelessWidget {
                         onTap: () {
                           controller.isLoading.value
                               ? null
-                              : _showBottomSheet(context);
+                              : Platform.isAndroid
+                                  ? controller.selectFilesFunction()
+                                  : _showBottomSheet(context);
                         },
                         child: Container(
                           width: width,
@@ -268,7 +272,7 @@ class FilesBottomSheet extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 120),
+          SizedBox(height: 110),
         ],
       ),
     );

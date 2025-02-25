@@ -42,46 +42,50 @@ class UploadController extends GetxController {
     } else if (status.isDenied) {
       openAppSettings();
     } else {
-      try {
-        print("Storage Access Granted");
-        FilePickerResult? result = await FilePicker.platform.pickFiles(
-          allowMultiple: true,
-          type: FileType.any,
+      selectFilesFunction();
+    }
+  }
+
+  selectFilesFunction() async {
+    try {
+      print("Storage Access Granted");
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.any,
+      );
+
+      if (result != null) {
+        isLoading.value = true;
+        selectedFiles.clear();
+        currentFileIndex.value = 0;
+
+        selectedFiles.addAll(
+          result.files.map((file) => FileUploadStatus(
+                fileName: file.name,
+                initialProgress: 0.0,
+              )),
         );
 
-        if (result != null) {
-          isLoading.value = true;
-          selectedFiles.clear();
-          currentFileIndex.value = 0;
+        for (int i = 0; i < result.files.length; i++) {
+          currentFileIndex.value = i;
+          selectedFiles[i].status.value = "Uploading...";
 
-          selectedFiles.addAll(
-            result.files.map((file) => FileUploadStatus(
-                  fileName: file.name,
-                  initialProgress: 0.0,
-                )),
-          );
-
-          for (int i = 0; i < result.files.length; i++) {
-            currentFileIndex.value = i;
-            selectedFiles[i].status.value = "Uploading...";
-
-            if (i > 0) {
-              selectedFiles[i - 1].status.value = "Completed";
-            }
-
-            await _uploadFile(i, File(result.files[i].path!));
+          if (i > 0) {
+            selectedFiles[i - 1].status.value = "Completed";
           }
 
-          if (selectedFiles.isNotEmpty) {
-            selectedFiles.last.status.value = "Completed";
-          }
-
-          isLoading.value = false;
+          await _uploadFile(i, File(result.files[i].path!));
         }
-      } catch (e) {
+
+        if (selectedFiles.isNotEmpty) {
+          selectedFiles.last.status.value = "Completed";
+        }
+
         isLoading.value = false;
-        print("Error selecting files: $e");
       }
+    } catch (e) {
+      isLoading.value = false;
+      print("Error selecting files: $e");
     }
   }
 
