@@ -45,6 +45,9 @@ class _FileTypesScreenState extends State<FileTypesScreen> {
       controller.allFilesPagination.clear();
       controller.isSelectionMode.value = false;
       controller.currentPage.value = 1;
+      controller.fileDownloadPathList.clear();
+      print(
+          "controller.fileDownloadPathList.clear() == ${controller.fileDownloadPathList}");
       controller.getPublishFiles(
         showpaginationLoader: false,
         fileType: widget.fileType,
@@ -79,14 +82,21 @@ class _FileTypesScreenState extends State<FileTypesScreen> {
   }
 
   /// Handle taps dynamically based on file type
-  void handleTap(Files file) async {
-    await controller.fileDetails(fileAccessKey: file.fileAccessKey ?? "");
+  void handleTap({required Files file, required int index}) async {
+    if (file.fileType != FileTypes.image) {
+      await controller.fileDetails(fileAccessKey: file.fileAccessKey ?? "");
+    }
+    print(
+        "controller.fileDownloadPathList == ${controller.fileDownloadPathList}");
 
     switch (widget.fileType) {
       case FileTypes.image:
-        Get.to(() => ImagesPreviewScreen(
-              images: [controller.filePath.value],
-            ));
+        Get.to(
+          () => ImagesPreviewScreen(
+            images: controller.fileDownloadPathList,
+            selectedImage: controller.fileDownloadPathList[index],
+          ),
+        );
         break;
 
       case FileTypes.video:
@@ -200,7 +210,8 @@ class _FileTypesScreenState extends State<FileTypesScreen> {
                                               fileAccessKey:
                                                   file.fileAccessKey!,
                                             )
-                                        : () => handleTap(file),
+                                        : () =>
+                                            handleTap(file: file, index: index),
                                     child: Container(
                                       color: isSelected
                                           ? Colors.green.withValues(alpha: 0.2)

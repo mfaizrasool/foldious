@@ -27,6 +27,7 @@ class FileTypeController extends GetxController {
   var progressText = "".obs;
   var isSelectionMode = false.obs;
   RxList<String> selectedFileIds = <String>[].obs;
+  RxList<String> fileDownloadPathList = <String>[].obs;
 
   FileTypeModel fileTypeModel = FileTypeModel();
   FileDetailsModel fileDetailsModel = FileDetailsModel();
@@ -69,9 +70,28 @@ class FileTypeController extends GetxController {
               (existingItem) => existingItem.fileId == newItem.fileId,
             ),
           ));
+
+          ///
+          ///
+          ///
+          ///
+          ///
+
+          // Extract existing file paths into a Set for fast lookup
+          final existingFilePaths = allFilesPagination
+              .map((file) => file.fileDownloadPath?.trim())
+              .where((path) => path != null)
+              .cast<String>()
+              .toSet();
+          // Remove common paths before adding
+          final uniquePaths =
+              existingFilePaths.difference(fileDownloadPathList.toSet());
+          // Add only unique paths
+          fileDownloadPathList.addAll(uniquePaths);
+          print("Final Updated fileDownloadPathList: $fileDownloadPathList");
         }
       } else {
-        showErrorMessage(result.message ?? "Failed to fetch files");
+        // showErrorMessage(result.message ?? "Failed to fetch files");
       }
     } catch (error) {
       showErrorMessage("An error occurred: $error");
@@ -120,7 +140,7 @@ class FileTypeController extends GetxController {
           ));
         }
       } else {
-        showErrorMessage(result.message ?? "Failed to fetch files");
+        // showErrorMessage(result.message ?? "Failed to fetch files");
       }
     } catch (error) {
       showErrorMessage("An error occurred: $error");
@@ -209,112 +229,6 @@ class FileTypeController extends GetxController {
 
   ///
   ///
-  ///
-  // Future<void> trashFiles() async {
-  //   try {
-  //     isLoading.value = true;
-
-  //     // Prepare payload for the API call
-  //     var payload = {
-  //       "record_ids": selectedFileIds.join(','),
-  //       "status": "trash",
-  //     };
-
-  //     final result = await Get.find<NetworkClient>().post(
-  //       ApiUrls.trash,
-  //       data: payload,
-  //       sendUserAuth: true,
-  //     );
-
-  //     if (result.isSuccess) {
-  //       selectedFileIds.clear();
-  //       allFilesPagination.clear();
-  //       currentPage.value = 1;
-  //     } else {
-  //       showErrorMessage(result.error ?? "Failed to move files to trash");
-  //     }
-  //   } catch (error) {
-  //     showErrorMessage("An error occurred: $error");
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
-
-  // ///
-  // ///
-  // ///
-  // Future<void> deleteFiles() async {
-  //   try {
-  //     isLoading.value = true;
-
-  //     // Prepare payload for the API call
-  //     var payload = {
-  //       "record_ids": selectedFileIds.join(','),
-  //       "status": "delete",
-  //     };
-
-  //     final result = await Get.find<NetworkClient>().post(
-  //       ApiUrls.trash,
-  //       data: payload,
-  //       sendUserAuth: true,
-  //     );
-
-  //     if (result.isSuccess) {
-  //       selectedFileIds.clear();
-  //       allFilesPagination.clear();
-  //       currentPage.value = 1;
-  //       await getTrashFiles(
-  //         showpaginationLoader: false,
-  //       );
-  //     } else {
-  //       showErrorMessage(result.error ?? "Failed to move files to trash");
-  //     }
-  //   } catch (error) {
-  //     showErrorMessage("An error occurred: $error");
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
-
-  // ///
-  // ///
-  // ///
-  // Future<void> restoreFiles() async {
-  //   try {
-  //     isLoading.value = true;
-
-  //     // Prepare payload for the API call
-  //     var payload = {
-  //       "record_ids": selectedFileIds.join(','),
-  //       "status": "publish",
-  //     };
-
-  //     final result = await Get.find<NetworkClient>().post(
-  //       ApiUrls.trash,
-  //       data: payload,
-  //       sendUserAuth: true,
-  //     );
-
-  //     if (result.isSuccess) {
-  //       selectedFileIds.clear();
-  //       allFilesPagination.clear();
-  //       currentPage.value = 1;
-
-  //       await getTrashFiles(
-  //         showpaginationLoader: false,
-  //       );
-  //     } else {
-  //       showErrorMessage(result.error ?? "Failed to move files to trash");
-  //     }
-  //   } catch (error) {
-  //     showErrorMessage("An error occurred: $error");
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
-
-  ///
-  ///
   /* -------------------------------------------------------------------------- */
   /*                                handle images                               */
   /* -------------------------------------------------------------------------- */
@@ -354,42 +268,6 @@ class FileTypeController extends GetxController {
       progressText.value = "";
     }
   }
-
-  ///
-  // Future<void> downloadNetworkImage(String fileUrl) async {
-  //   try {
-  //     isDownloading.value = true;
-  //     downloadProgress.value = 0.0;
-  //     progressText.value = "0 MB / 0 MB";
-
-  //     var response = await Dio().get(
-  //       fileUrl,
-  //       options: Options(responseType: ResponseType.bytes),
-  //       onReceiveProgress: (received, total) {
-  //         // Update download progress and text
-  //         if (total != -1) {
-  //           downloadProgress.value = received / total;
-  //           progressText.value =
-  //               "${(received / (1024 * 1024)).toStringAsFixed(1)} MB / ${(total / (1024 * 1024)).toStringAsFixed(1)} MB";
-  //         }
-  //       },
-  //     );
-
-  //     await ImageGallerySaverPlus.saveImage(
-  //       Uint8List.fromList(response.data),
-  //       quality: 60,
-  //       name: fileUrl.split("/").last,
-  //     );
-
-  //     await Share.shareXFiles(files)
-  //   } finally {
-  //     isLoading.value = true;
-  //     isLoading.value = false;
-  //     isDownloading.value = false;
-  //     downloadProgress.value = 0.0;
-  //     progressText.value = "";
-  //   }
-  // }
 
   Future<void> shareImageButton(String imageUrl) async {
     await Share.share(imageUrl);
