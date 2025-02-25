@@ -73,6 +73,10 @@
 		<string>remote-notification</string>
 	</array>
 
+	<key>UIFileSharingEnabled</key>
+	<true/>
+
+
 	<!-- video -->
 	<key>NSAppTransportSecurity</key>
 	<dict>
