@@ -86,8 +86,8 @@ class _FileTypesScreenState extends State<FileTypesScreen> {
     if (file.fileType != FileTypes.image) {
       await controller.fileDetails(fileAccessKey: file.fileAccessKey ?? "");
     }
-    print(
-        "controller.fileDownloadPathList == ${controller.fileDownloadPathList}");
+    // print(
+    //     "controller.fileDownloadPathList == ${controller.fileDownloadPathList}");
 
     switch (widget.fileType) {
       case FileTypes.image:

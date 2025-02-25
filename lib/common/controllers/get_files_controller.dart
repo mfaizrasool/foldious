@@ -269,10 +269,6 @@ class FileTypeController extends GetxController {
     }
   }
 
-  Future<void> shareImageButton(String imageUrl) async {
-    await Share.share(imageUrl);
-  }
-
   /* -------------------------------------------------------------------------- */
   /*                               download video                               */
   /* -------------------------------------------------------------------------- */
