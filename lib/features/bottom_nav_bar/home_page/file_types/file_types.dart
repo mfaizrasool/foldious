@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:foldious/common/controllers/get_files_controller.dart';
 import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/common/models/file_type_model.dart';
@@ -190,67 +191,132 @@ class _FileTypesScreenState extends State<FileTypesScreen> {
                           child: Column(
                             children: [
                               SizedBox(height: height * 0.02),
-                              ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                itemCount: controller.allFilesPagination.length,
-                                itemBuilder: (context, index) {
-                                  Files file =
-                                      controller.allFilesPagination[index];
-                                  bool isSelected = controller.selectedFileIds
-                                      .contains(file.fileAccessKey);
-                                  return GestureDetector(
-                                    onLongPress: () =>
-                                        controller.toggleSelection(
-                                      fileAccessKey: file.fileAccessKey!,
-                                    ),
-                                    onTap: controller.isSelectionMode.value
-                                        ? () => controller.toggleSelection(
+                              widget.fileType == FileTypes.image
+                                  ? StaggeredGrid.count(
+                                      crossAxisCount: 4,
+                                      mainAxisSpacing: 4,
+                                      crossAxisSpacing: 4,
+                                      children: List.generate(
+                                          controller.allFilesPagination.length,
+                                          (index) {
+                                        Files file = controller
+                                            .allFilesPagination[index];
+                                        bool isSelected = controller
+                                            .selectedFileIds
+                                            .contains(file.fileAccessKey);
+
+                                        int crossAxisCellCount = controller
+                                            .crossAxisCellCounts[index];
+                                        int mainAxisCellCount = controller
+                                            .mainAxisCellCounts[index];
+
+                                        return StaggeredGridTile.count(
+                                          crossAxisCellCount: mainAxisCellCount,
+                                          mainAxisCellCount: crossAxisCellCount,
+                                          child: GestureDetector(
+                                            onLongPress: () =>
+                                                controller.toggleSelection(
                                               fileAccessKey:
                                                   file.fileAccessKey!,
-                                            )
-                                        : () =>
-                                            handleTap(file: file, index: index),
-                                    child: Container(
-                                      color: isSelected
-                                          ? Colors.green.withValues(alpha: 0.2)
-                                          : Colors.transparent,
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          vertical: height * 0.01,
-                                          horizontal: width * 0.06,
-                                        ),
-                                        child: InfoItem(
-                                          isLeadingPading: false,
-                                          leading: FileTypes.image ==
-                                                      file.fileType &&
-                                                  (file.fileDownloadPath !=
+                                            ),
+                                            onTap: controller
+                                                    .isSelectionMode.value
+                                                ? () =>
+                                                    controller.toggleSelection(
+                                                      fileAccessKey:
+                                                          file.fileAccessKey!,
+                                                    )
+                                                : () => handleTap(
+                                                    file: file, index: index),
+                                            child: Container(
+                                              color: isSelected
+                                                  ? Colors.green
+                                                      .withValues(alpha: 0.2)
+                                                  : Colors.transparent,
+                                              child: file.fileDownloadPath !=
                                                           null &&
                                                       file.fileDownloadPath!
-                                                          .isNotEmpty)
-                                              ? SizedBox(
-                                                  height: height * 0.07,
-                                                  width: height * 0.07,
-                                                  child: LoadingImage(
-                                                    imageUrl:
-                                                        file.fileDownloadPath!,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                )
-                                              : fileIcon,
+                                                          .isNotEmpty
+                                                  ? LoadingImage(
+                                                      imageUrl: file
+                                                          .fileDownloadPath!,
+                                                      fit: BoxFit.cover,
+                                                    )
+                                                  : fileIcon,
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                    )
+                                  : ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      itemCount:
+                                          controller.allFilesPagination.length,
+                                      itemBuilder: (context, index) {
+                                        Files file = controller
+                                            .allFilesPagination[index];
+                                        bool isSelected = controller
+                                            .selectedFileIds
+                                            .contains(file.fileAccessKey);
+                                        return GestureDetector(
+                                          onLongPress: () =>
+                                              controller.toggleSelection(
+                                            fileAccessKey: file.fileAccessKey!,
+                                          ),
+                                          onTap: controller
+                                                  .isSelectionMode.value
+                                              ? () =>
+                                                  controller.toggleSelection(
+                                                    fileAccessKey:
+                                                        file.fileAccessKey!,
+                                                  )
+                                              : () => handleTap(
+                                                  file: file, index: index),
+                                          child: Container(
+                                            color: isSelected
+                                                ? Colors.green
+                                                    .withValues(alpha: 0.2)
+                                                : Colors.transparent,
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: height * 0.01,
+                                                horizontal: width * 0.06,
+                                              ),
+                                              child: InfoItem(
+                                                isLeadingPading: false,
+                                                leading: FileTypes.image ==
+                                                            file.fileType &&
+                                                        (file.fileDownloadPath !=
+                                                                null &&
+                                                            file.fileDownloadPath!
+                                                                .isNotEmpty)
+                                                    ? SizedBox(
+                                                        height: height * 0.07,
+                                                        width: height * 0.07,
+                                                        child: LoadingImage(
+                                                          imageUrl: file
+                                                              .fileDownloadPath!,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      )
+                                                    : fileIcon,
 
-                                          ///
-                                          subTitle: file.fileDate ?? "",
-                                          title: file.fileName!.split("_").last,
-                                          trailingWidget:
-                                              Text(file.fileSize ?? ""),
-                                        ),
-                                      ),
+                                                ///
+                                                subTitle: file.fileDate ?? "",
+                                                title: file.fileName!
+                                                    .split("_")
+                                                    .last,
+                                                trailingWidget:
+                                                    Text(file.fileSize ?? ""),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
-                                  );
-                                },
-                              ),
                               SizedBox(height: height * 0.1),
                               if (controller.isGettingMore.value)
                                 SpinKitSpinningLines(

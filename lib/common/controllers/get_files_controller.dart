@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,22 @@ class FileTypeController extends GetxController {
   FileTypeModel fileTypeModel = FileTypeModel();
   FileDetailsModel fileDetailsModel = FileDetailsModel();
   RxList<Files> allFilesPagination = <Files>[].obs;
+
+  List<int> crossAxisCellCounts = [];
+  List<int> mainAxisCellCounts = [];
+
+  // Assuming you fetch the list of files
+  void initializeFileLayout(List<Files> files) {
+    final random = Random();
+
+    crossAxisCellCounts = List.generate(files.length, (index) {
+      return random.nextInt(2) + 1;
+    });
+
+    mainAxisCellCounts = List.generate(files.length, (index) {
+      return random.nextInt(1) + 2;
+    });
+  }
 
   ///
   Future<void> getPublishFiles({
@@ -76,19 +93,21 @@ class FileTypeController extends GetxController {
           ///
           ///
           ///
-
-          // Extract existing file paths into a Set for fast lookup
-          final existingFilePaths = allFilesPagination
-              .map((file) => file.fileDownloadPath?.trim())
-              .where((path) => path != null)
-              .cast<String>()
-              .toSet();
-          // Remove common paths before adding
-          final uniquePaths =
-              existingFilePaths.difference(fileDownloadPathList.toSet());
-          // Add only unique paths
-          fileDownloadPathList.addAll(uniquePaths);
-          print("Final Updated fileDownloadPathList: $fileDownloadPathList");
+          if (fileType == FileTypes.image) {
+            // Extract existing file paths into a Set for fast lookup
+            final existingFilePaths = allFilesPagination
+                .map((file) => file.fileDownloadPath?.trim())
+                .where((path) => path != null)
+                .cast<String>()
+                .toSet();
+            // Remove common paths before adding
+            final uniquePaths =
+                existingFilePaths.difference(fileDownloadPathList.toSet());
+            // Add only unique paths
+            fileDownloadPathList.addAll(uniquePaths);
+            print("Final Updated fileDownloadPathList: $fileDownloadPathList");
+            initializeFileLayout(allFilesPagination);
+          }
         }
       } else {
         // showErrorMessage(result.message ?? "Failed to fetch files");
