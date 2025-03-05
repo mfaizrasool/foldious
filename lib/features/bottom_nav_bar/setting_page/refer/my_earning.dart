@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/refer/my_earning_controller.dart';
+import 'package:foldious/features/bottom_nav_bar/setting_page/refer/withdraw_page.dart';
 import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/app_text_styles.dart';
 import 'package:foldious/utils/theme/constants/app_constants.dart';
@@ -17,8 +18,7 @@ class MyEarningPage extends StatefulWidget {
 
 class _MyEarningPageState extends State<MyEarningPage> {
   final UserDetailsController userDetailsController = Get.find();
-  final MyEarningController myEarningController =
-      Get.put(MyEarningController());
+  final MyEarningController controller = Get.put(MyEarningController());
 
   @override
   void initState() {
@@ -37,7 +37,7 @@ class _MyEarningPageState extends State<MyEarningPage> {
           title: AppLabels.myEarning,
         ),
         body: userDetailsController.isLoading.value ||
-                myEarningController.isLoading.value
+                controller.isLoading.value
             ? LoadingIndicator()
             : Padding(
                 padding: EdgeInsets.symmetric(horizontal: width * 0.05),
@@ -45,18 +45,21 @@ class _MyEarningPageState extends State<MyEarningPage> {
                   height: height,
                   width: width,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Displaying the earnings
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: height * 0.02),
-                        child: Text(
-                          'Total Earnings: ${myEarningController.myEarning.userData?.length ?? 0} x ${10} = ${myEarningController.myEarning.earnings ?? 0} PKR',
-                          style: AppTextStyle.titleLarge,
-                        ),
+                      SizedBox(height: height * 0.02),
+                      Text(
+                        'Total Earnings: ${controller.myEarning.userData?.length ?? 0} x ${10} = ${controller.myEarning.earnings ?? 0} PKR',
+                        style: AppTextStyle.titleLarge,
+                      ),
+                      SizedBox(height: height * 0.02),
+                      Text(
+                        'Total Withdraw: ${controller.myEarning.totalWithdraw ?? 0} PKR',
+                        style: AppTextStyle.titleLarge,
                       ),
 
                       ///
+                      SizedBox(height: height * 0.02),
                       Text(
                         'You can withdraw your earnings once you reach a minimum of 100 PKR.',
                         style: AppTextStyle.titleSmall,
@@ -69,14 +72,11 @@ class _MyEarningPageState extends State<MyEarningPage> {
                       // ListView for user data
                       Expanded(
                         child: ListView.builder(
-                          itemCount:
-                              myEarningController.myEarning.userData?.length ??
-                                  0,
+                          itemCount: controller.myEarning.userData?.length ?? 0,
                           shrinkWrap: true,
                           padding: EdgeInsets.zero,
                           itemBuilder: (context, index) {
-                            var user =
-                                myEarningController.myEarning.userData![index];
+                            var user = controller.myEarning.userData![index];
                             Color textColor = (index % 2 == 0)
                                 ? AppColors.greyColor.withValues(alpha: 0.2)
                                 : Colors.transparent;
@@ -117,9 +117,16 @@ class _MyEarningPageState extends State<MyEarningPage> {
                         ),
                       ),
                       SizedBox(height: height * 0.01),
-                      PrimaryButton(
-                        title: "Withdraw",
-                        onPressed: () {},
+                      Center(
+                        child: PrimaryButton(
+                          title: "Withdraw",
+                          enabled: (controller.myEarning.earnings ?? 0) >= 100
+                              ? true
+                              : false,
+                          onPressed: () {
+                            Get.to(() => WithDrawPage());
+                          },
+                        ),
                       ),
                       SizedBox(height: height * 0.01),
                     ],

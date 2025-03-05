@@ -9,6 +9,48 @@ import 'package:get/get.dart';
 class MyEarningController extends GetxController {
   var isLoading = true.obs;
 
+  ///
+  RxString selectedPaymentMethod = "Bank Account".obs;
+  final List<String> paymentMethods = ['Bank Account', 'EasyPaisa', 'JazzCash'];
+
+  ///
+  RxString selectedBank = "Select".obs;
+  final List<String> bankList = [
+    'Select',
+    'ABL',
+    'Askari Bank',
+    'Bank Al-Habib Ltd.',
+    'Bank Alfalah',
+    'Bank Islami',
+    'FWBL',
+    'Dubai Islamic',
+    'HBL',
+    'Habib Metro',
+    'JS Bank',
+    'MCB',
+    'MCB Islamic',
+    'Meezan',
+    'Samba',
+    'Silk Bank',
+    'Sindh Bank',
+    'Soneri Bank Ltd.',
+    'Standard Chartered',
+    'Summit Bank',
+    'BOK',
+    'UBL',
+    'BOP',
+    'Faysal Bank',
+    'NBP',
+    'Bank of China',
+    'ICBC',
+    'Citi Bank',
+    'SME Bank',
+    'Al-Baraka Bank',
+    'PPCBL',
+    'Deutsche',
+    'IDBL',
+  ];
+
   @override
   void onInit() {
     getMyEarning();
@@ -25,6 +67,55 @@ class MyEarningController extends GetxController {
       final result = await Get.find<NetworkClient>().get(
         ApiUrls.referalListView,
         queryParameters: {'user_id': userId},
+        sendUserAuth: true,
+      );
+
+      if (result.isSuccess) {
+        myEarning = MyEarningModel.fromJson(result.rawData);
+      } else {
+        showErrorMessage(result.error ?? 'An error occurred');
+      }
+    } catch (e) {
+      showErrorMessage('An error occurred: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  ///
+  ///
+  ///
+  Future<void> withdrawEarning() async {
+    try {
+      isLoading.value = true;
+      await Future.delayed(const Duration(seconds: 0));
+      String userId = await AppPreferencesController()
+          .getString(key: AppPreferenceLabels.userId);
+      String idsToSend = "";
+      for (var user in myEarning.userData!) {
+        if (user.userReferalAmount == "0" && user.userId != null) {
+          if (idsToSend.isNotEmpty) {
+            idsToSend += ",";
+          }
+          idsToSend += user.userId!;
+        }
+      }
+
+      print("idsToSend ==> $idsToSend");
+
+      var payload = {
+        "user_id": userId,
+        "withdraw_amount": "100",
+        "withdraw_method": "Bank Transfer",
+        "withdraw_account_name": "Salman Ansari",
+        "withdraw_account_number": "05160104089797",
+        "referal_users": idsToSend,
+      };
+
+      ///
+      final result = await Get.find<NetworkClient>().post(
+        ApiUrls.requestWithdraw,
+        data: payload,
         sendUserAuth: true,
       );
 
