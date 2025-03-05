@@ -99,13 +99,10 @@ class _MyEarningPageState extends State<MyEarningPage> {
                                         style: AppTextStyle.bodyMedium,
                                       ),
                                       SizedBox(height: height * 0.005),
-
-                                      ///
                                       Text(
                                         'Email: ${user.userEmail ?? 'N/A'}',
                                         style: AppTextStyle.bodyMedium,
                                       ),
-
                                       SizedBox(height: height * 0.005),
                                       Text(
                                         'Date: ${user.createdAt ?? 'N/A'}',
