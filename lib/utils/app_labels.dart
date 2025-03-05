@@ -101,4 +101,10 @@ class AppLabels {
   static const newPassword = "New Password";
   static const confirmPassword = "Confirm Password";
   static const enterPassword = "Enter Password";
+
+  /* -------------------------------------------------------------------------- */
+  /*                                ReferAndEarn                                */
+  /* -------------------------------------------------------------------------- */
+
+  static const referAndEarn = "Refer and earn";
 }

@@ -5,6 +5,7 @@ import 'package:foldious/features/bottom_nav_bar/setting_page/appearance/appeara
 import 'package:foldious/features/bottom_nav_bar/setting_page/change_password/change_password.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/notifications/notifications_controller.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/notifications/notifications_page.dart';
+import 'package:foldious/features/bottom_nav_bar/setting_page/refer/refer_and_earn.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/settings_controller.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/terms_page/terms_page.dart';
 import 'package:foldious/utils/app_labels.dart';
@@ -171,6 +172,15 @@ class _SettingPageState extends State<SettingPage> {
                           icon: Icons.help_outline_rounded,
                           onTap: () {
                             Get.to(() => AppVersionPage());
+                          },
+                        ),
+
+                        ///
+                        PrimaryListTile(
+                          title: AppLabels.referAndEarn,
+                          icon: Icons.help_outline_rounded,
+                          onTap: () {
+                            Get.to(() => ReferAndEarnPage());
                           },
                         ),
 
