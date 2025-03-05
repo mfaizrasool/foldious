@@ -107,4 +107,5 @@ class AppLabels {
   /* -------------------------------------------------------------------------- */
 
   static const referAndEarn = "Refer and earn";
+  static const myEarning = "My Earning";
 }

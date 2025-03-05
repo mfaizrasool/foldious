@@ -41,4 +41,9 @@ class ApiUrls {
   static const String getNotifications = "/notification/get_notifications.php";
   static const String updateNotificationStatus =
       "/notification/update_notification_status.php";
+
+  /* -------------------------------------------------------------------------- */
+  /*                                    refer                                   */
+  /* -------------------------------------------------------------------------- */
+  static const String referalListView = "/referal/referal_list_view.php";
 }

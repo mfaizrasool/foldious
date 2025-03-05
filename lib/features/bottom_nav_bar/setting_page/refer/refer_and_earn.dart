@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:foldious/common/controllers/user_details_controller.dart';
+import 'package:foldious/features/bottom_nav_bar/setting_page/refer/my_earning.dart';
 import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/app_text_styles.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
@@ -100,6 +101,7 @@ class _ReferAndEarnPageState extends State<ReferAndEarnPage> {
                       Text(
                         "Share the link above to earn 10 PKR for every account that joins. Just click 'Copy,' then paste and share the link anywhere. You can withdraw your earnings once you reach a minimum of 100 PKR.",
                         style: AppTextStyle.bodyMedium,
+                        textAlign: TextAlign.center,
                       ),
                       PrimaryButton(
                         title: "Invite friends",
@@ -108,6 +110,12 @@ class _ReferAndEarnPageState extends State<ReferAndEarnPage> {
                               "Referral code: ${userDetailsController.userDetails.userId} \n\nPlay Store: https://play.google.com/store/apps/details?id=com.foldious.storage\n\n\nApp Store: https://apps.apple.com/us/app/foldious-cloud-storage/id6742392762";
 
                           await Share.share(copiedText);
+                        },
+                      ),
+                      PrimaryButton(
+                        title: AppLabels.myEarning,
+                        onPressed: () async {
+                          await Get.to(() => const MyEarningPage());
                         },
                       ),
                     ],
