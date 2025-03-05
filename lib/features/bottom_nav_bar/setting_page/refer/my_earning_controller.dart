@@ -85,7 +85,10 @@ class MyEarningController extends GetxController {
   ///
   ///
   ///
-  Future<void> withdrawEarning() async {
+  Future<void> withdrawEarning({
+    required String name,
+    required String account,
+  }) async {
     try {
       isLoading.value = true;
       await Future.delayed(const Duration(seconds: 0));
@@ -105,10 +108,10 @@ class MyEarningController extends GetxController {
 
       var payload = {
         "user_id": userId,
-        "withdraw_amount": "100",
-        "withdraw_method": "Bank Transfer",
-        "withdraw_account_name": "Salman Ansari",
-        "withdraw_account_number": "05160104089797",
+        "withdraw_amount": myEarning.earnings.toString(),
+        "withdraw_method": selectedPaymentMethod.value,
+        "withdraw_account_name": name,
+        "withdraw_account_number": account,
         "referal_users": idsToSend,
       };
 
@@ -121,6 +124,7 @@ class MyEarningController extends GetxController {
 
       if (result.isSuccess) {
         myEarning = MyEarningModel.fromJson(result.rawData);
+        Get.back();
       } else {
         showErrorMessage(result.error ?? 'An error occurred');
       }

@@ -49,13 +49,13 @@ class _MyEarningPageState extends State<MyEarningPage> {
                     children: [
                       SizedBox(height: height * 0.02),
                       Text(
-                        'Total Earnings: ${controller.myEarning.userData?.length ?? 0} x ${10} = ${controller.myEarning.earnings ?? 0} PKR',
-                        style: AppTextStyle.titleLarge,
+                        'Total Earnings: ${controller.myEarning.earnings ?? 0} PKR',
+                        style: AppTextStyle.titleMedium,
                       ),
-                      SizedBox(height: height * 0.02),
+                      SizedBox(height: height * 0.01),
                       Text(
                         'Total Withdraw: ${controller.myEarning.totalWithdraw ?? 0} PKR',
-                        style: AppTextStyle.titleLarge,
+                        style: AppTextStyle.titleMedium,
                       ),
 
                       ///
@@ -63,7 +63,6 @@ class _MyEarningPageState extends State<MyEarningPage> {
                       Text(
                         'You can withdraw your earnings once you reach a minimum of 100 PKR.',
                         style: AppTextStyle.titleSmall,
-                        textAlign: TextAlign.center,
                       ),
 
                       ///
@@ -123,8 +122,9 @@ class _MyEarningPageState extends State<MyEarningPage> {
                           enabled: (controller.myEarning.earnings ?? 0) >= 100
                               ? true
                               : false,
-                          onPressed: () {
-                            Get.to(() => WithDrawPage());
+                          onPressed: () async {
+                            await Get.to(() => WithDrawPage());
+                            await controller.getMyEarning();
                           },
                         ),
                       ),
