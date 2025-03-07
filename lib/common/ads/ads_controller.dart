@@ -54,8 +54,8 @@ class UnityAdsController extends GetxController {
     );
   }
 
-  /// Show Unity Ad
-  void showUnityAd() {
+  /// Show Unity Ad and trigger the navigation callback after the ad is shown
+  void showUnityAdAndNavigate(Function onAdComplete) {
     if (!isInitialized.value) {
       print('Unity Ads not initialized.');
       return;
@@ -64,7 +64,6 @@ class UnityAdsController extends GetxController {
     if (!isAdReady.value) {
       print('Ad not ready. Loading a new one...');
       loadUnityAd();
-      showUnityAd();
       return;
     }
 
@@ -76,16 +75,19 @@ class UnityAdsController extends GetxController {
         isAdReady.value = false;
         print('Video Ad Skipped: $placementId');
         loadUnityAd();
+        onAdComplete(); // Navigate after skipping ad
       },
       onComplete: (placementId) {
         isAdReady.value = false;
         print('Video Ad Completed: $placementId');
         loadUnityAd();
+        onAdComplete(); // Navigate after ad completes
       },
       onFailed: (placementId, error, message) {
         isAdReady.value = false;
         print('Video Ad Failed: $placementId - $error - $message');
         loadUnityAd();
+        onAdComplete(); // Navigate even if the ad fails
       },
     );
   }

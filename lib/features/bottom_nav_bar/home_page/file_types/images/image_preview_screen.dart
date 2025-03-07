@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foldious/common/ads/ads_controller.dart';
 import 'package:foldious/common/controllers/get_files_controller.dart';
 import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/app_text_styles.dart';
@@ -199,10 +200,14 @@ class _ImagesPreviewScreenState extends State<ImagesPreviewScreen> {
                 ),
                 onTap: () async {
                   Get.back();
-                  await controller.downloadNetworkImage(
-                    fileUrl: widget.images[currentIndex],
-                    isSharing: true,
-                  );
+
+                  UnityAdsController unityAdsController = Get.find();
+                  unityAdsController.showUnityAdAndNavigate(() async {
+                    await controller.downloadNetworkImage(
+                      fileUrl: widget.images[currentIndex],
+                      isSharing: true,
+                    );
+                  });
                 },
               ),
               ListTile(
@@ -214,10 +219,13 @@ class _ImagesPreviewScreenState extends State<ImagesPreviewScreen> {
                 ),
                 onTap: () async {
                   Get.back();
-                  await controller.downloadNetworkImage(
-                    fileUrl: widget.images[currentIndex],
-                    isSharing: false,
-                  );
+                  UnityAdsController unityAdsController = Get.find();
+                  unityAdsController.showUnityAdAndNavigate(() async {
+                    await controller.downloadNetworkImage(
+                      fileUrl: widget.images[currentIndex],
+                      isSharing: false,
+                    );
+                  });
                 },
               ),
             ],

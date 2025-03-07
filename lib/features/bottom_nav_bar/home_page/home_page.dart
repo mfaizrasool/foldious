@@ -50,12 +50,15 @@ class _HomePageState extends State<HomePage> {
           actions: [
             IconButton(
               onPressed: () async {
-                if (userDetailsController.userDetails.userReferalId == "0") {
-                  await Get.to(() => AddReferalDialog());
-                  await userDetailsController.getUserDetails();
-                } else {
-                  showErrorMessage("You have already redeemed referal code");
-                }
+                UnityAdsController unityAdsController = Get.find();
+                unityAdsController.showUnityAdAndNavigate(() async {
+                  if (userDetailsController.userDetails.userReferalId == "0") {
+                    await Get.to(() => AddReferalDialog());
+                    await userDetailsController.getUserDetails();
+                  } else {
+                    showErrorMessage("You have already redeemed referal code");
+                  }
+                });
               },
               icon: LoadingImage(
                 imageUrl:
@@ -73,19 +76,7 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       SizedBox(height: height * 0.02),
-                      ElevatedButton(
-                        onPressed: () {
-                          unityAdsController.loadUnityAd();
-                        },
-                        child: Text("Load Ad"),
-                      ),
-                      SizedBox(height: height * 0.02),
-                      ElevatedButton(
-                        onPressed: () {
-                          unityAdsController.showUnityAd();
-                        },
-                        child: Text("Show Ad"),
-                      ),
+
                       // Padding(
                       //   padding: const EdgeInsets.symmetric(horizontal: 20),
                       //   child: Row(

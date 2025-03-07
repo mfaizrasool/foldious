@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foldious/common/ads/ads_controller.dart';
 import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/about/app_version_page.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/appearance/appearance_screen.dart';
@@ -181,8 +182,12 @@ class _SettingPageState extends State<SettingPage> {
                           PrimaryListTile(
                             title: AppLabels.referAndEarn,
                             icon: Icons.help_outline_rounded,
-                            onTap: () {
-                              Get.to(() => ReferAndEarnPage());
+                            onTap: () async {
+                              UnityAdsController unityAdsController =
+                                  Get.find();
+                              unityAdsController.showUnityAdAndNavigate(() {
+                                Get.to(() => ReferAndEarnPage());
+                              });
                             },
                           ),
 

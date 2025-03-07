@@ -2,6 +2,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:foldious/common/ads/ads_controller.dart';
 import 'package:foldious/common/controllers/get_files_controller.dart';
 import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/app_text_styles.dart';
@@ -85,9 +86,13 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           onBackPressed: _handleBackNavigation,
           actions: [
             IconButton(
-              icon: const Icon(Icons.download),
-              onPressed: () => controller.saveNetworkVideoFile(widget.fileUrl),
-            )
+                icon: const Icon(Icons.download),
+                onPressed: () {
+                  UnityAdsController unityAdsController = Get.find();
+                  unityAdsController.showUnityAdAndNavigate(() {
+                    controller.saveNetworkVideoFile(widget.fileUrl);
+                  });
+                })
           ],
         ),
         backgroundColor: appTheme.scaffoldBackgroundColor,

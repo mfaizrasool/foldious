@@ -14,7 +14,7 @@ void showSuccessMessage(
   final s = messengerState ?? ScaffoldMessenger.of(Get.context!);
   s.showSnackBar(
     SnackBar(
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(seconds: 1),
       content: Text(
         message,
         style: GoogleFonts.nunitoSans(
@@ -36,7 +36,7 @@ void showErrorMessage(
   final s = messengerState ?? ScaffoldMessenger.of(Get.context!);
   s.showSnackBar(
     SnackBar(
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(seconds: 1),
       content: Text(
         message,
         style: GoogleFonts.nunitoSans(
