@@ -4,6 +4,7 @@ import 'package:foldious/features/authentication/signup_screen/signup_controller
 import 'package:foldious/features/authentication/widgets/social_buttons.dart';
 import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/app_text_styles.dart';
+import 'package:foldious/utils/show_snackbar.dart';
 import 'package:foldious/widgets/app_logo.dart';
 import 'package:foldious/widgets/arrow_back_button.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
@@ -115,10 +116,26 @@ class _SignupScreenState extends State<SignupScreen> {
                                 title: AppLabels.signUp,
                                 onPressed: () async {
                                   FocusScope.of(context).unfocus();
-                                  controller.validateAndCallSignUpApi(
-                                    userName: nameController.text,
-                                    email: emailController.text,
-                                  );
+
+                                  if (isDisposableEmail(
+                                      emailController.text.trim())) {
+                                    showErrorMessage(
+                                        "Temporary email addresses are not allowed");
+                                  } else if (emailController.text
+                                      .trim()
+                                      .contains("+")) {
+                                    showErrorMessage(
+                                        "Temporary email addresses are not allowed");
+                                  } else if (RegExp(r"\.\d+\.\d+@")
+                                      .hasMatch(emailController.text.trim())) {
+                                    showErrorMessage(
+                                        "Email addresses with multiple dots are not allowed");
+                                  } else {
+                                    controller.validateAndCallSignUpApi(
+                                      userName: nameController.text,
+                                      email: emailController.text.trim(),
+                                    );
+                                  }
                                 },
                               ),
                             ),
@@ -181,5 +198,23 @@ class _SignupScreenState extends State<SignupScreen> {
         );
       }),
     );
+  }
+
+  bool isDisposableEmail(String email) {
+    // List of disposable email providers
+    List<String> disposableEmailProviders = [
+      "yopmail",
+      "mailinator",
+      "10minutemail",
+      "guerrillamail",
+      "throwawaymail",
+      "tempmail",
+      "trashmail",
+      "maildrop",
+      "dispostable"
+    ];
+
+    // Check if the email contains any disposable email provider
+    return disposableEmailProviders.any((provider) => email.contains(provider));
   }
 }
