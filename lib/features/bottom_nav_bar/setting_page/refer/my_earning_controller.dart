@@ -135,10 +135,15 @@ class MyEarningController extends GetxController {
 
       print("idsToSend ==> $idsToSend");
 
+      String withdrawMethod =
+          selectedPaymentMethod.value == paymentMethods.first
+              ? selectedPaymentMethod.value + ": " + selectedBank.value
+              : selectedPaymentMethod.value;
+
       var payload = {
         "user_id": userId,
         "withdraw_amount": myEarning.earnings.toString(),
-        "withdraw_method": selectedPaymentMethod.value,
+        "withdraw_method": withdrawMethod,
         "withdraw_account_name": name,
         "withdraw_account_number": account,
         "referal_users": idsToSend,
@@ -152,7 +157,6 @@ class MyEarningController extends GetxController {
       );
 
       if (result.isSuccess) {
-        myEarning = MyEarningModel.fromJson(result.rawData);
         Get.back();
       } else {
         showErrorMessage(result.error ?? 'An error occurred');

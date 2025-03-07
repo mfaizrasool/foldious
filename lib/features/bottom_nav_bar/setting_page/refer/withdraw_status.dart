@@ -76,9 +76,23 @@ class _WithdrawStatusPageState extends State<WithdrawStatusPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        'Amount: ${user.withdrawAmount ?? 'N/A'}',
-                                        style: AppTextStyle.bodyMedium,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Amount: ${user.withdrawAmount} PKR',
+                                            style: AppTextStyle.bodyMedium,
+                                          ),
+                                          user.withdrawStatus == "pending"
+                                              ? Icon(
+                                                  Icons.watch_later_outlined,
+                                                )
+                                              : Icon(
+                                                  Icons
+                                                      .check_circle_outline_outlined,
+                                                ),
+                                        ],
                                       ),
 
                                       ///

@@ -132,7 +132,7 @@ class _MyEarningPageState extends State<MyEarningPage> {
                               child: PrimaryButton(
                                 title: "Withdraw",
                                 onPressed: () async {
-                                  if ((controller.myEarning.earnings ?? 0) <=
+                                  if ((controller.myEarning.earnings ?? 0) <
                                       100) {
                                     showErrorMessage(
                                         'You need to have at least 100 PKR to withdraw.');
