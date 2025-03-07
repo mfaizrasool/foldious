@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/refer/my_earning_controller.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/refer/withdraw_page.dart';
+import 'package:foldious/features/bottom_nav_bar/setting_page/refer/withdraw_status.dart';
 import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/app_text_styles.dart';
+import 'package:foldious/utils/show_snackbar.dart';
 import 'package:foldious/utils/theme/constants/app_constants.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
 import 'package:foldious/widgets/primary_appbar.dart';
@@ -117,15 +119,39 @@ class _MyEarningPageState extends State<MyEarningPage> {
                       ),
                       SizedBox(height: height * 0.01),
                       Center(
-                        child: PrimaryButton(
-                          title: "Withdraw",
-                          enabled: (controller.myEarning.earnings ?? 0) >= 100
-                              ? true
-                              : false,
-                          onPressed: () async {
-                            await Get.to(() => WithDrawPage());
-                            await controller.getMyEarning();
-                          },
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: PrimaryButton(
+                                title: "Withdraw",
+                                onPressed: () async {
+                                  if ((controller.myEarning.earnings ?? 0) <=
+                                      100) {
+                                    showErrorMessage(
+                                        'You need to have at least 100 PKR to withdraw.');
+                                  } else {
+                                    await Get.to(() => WithDrawPage());
+                                    await controller.getMyEarning();
+                                  }
+                                },
+                              ),
+                            ),
+
+                            SizedBox(width: width * 0.02),
+
+                            ///
+                            ///
+                            ///
+                            Expanded(
+                              child: PrimaryButton(
+                                width: width * 0.3,
+                                title: "Status",
+                                onPressed: () {
+                                  Get.to(() => const WithdrawStatusPage());
+                                },
+                              ),
+                            )
+                          ],
                         ),
                       ),
                       SizedBox(height: height * 0.01),

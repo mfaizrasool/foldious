@@ -48,6 +48,8 @@ class UserDetails {
   String? userEmail;
   String? userPassword;
   String? userChannelId;
+  String? userReferalId;
+  String? userReferalAmount;
   String? userImage;
   String? userContact;
   String? userAge;
@@ -55,7 +57,6 @@ class UserDetails {
   String? userAddress;
   String? userVerify;
   String? userBalance;
-  String? userReferalId;
   String? createdAt;
   String? deletedAt;
 
@@ -66,6 +67,8 @@ class UserDetails {
     this.userEmail,
     this.userPassword,
     this.userChannelId,
+    this.userReferalId,
+    this.userReferalAmount,
     this.userImage,
     this.userContact,
     this.userAge,
@@ -73,7 +76,6 @@ class UserDetails {
     this.userAddress,
     this.userVerify,
     this.userBalance,
-    this.userReferalId,
     this.createdAt,
     this.deletedAt,
   });
@@ -85,6 +87,8 @@ class UserDetails {
     userEmail = json['user_email'];
     userPassword = json['user_password'];
     userChannelId = json['user_channel_id'];
+    userReferalId = json['user_referal_id'];
+    userReferalAmount = json['user_referal_amount'];
     userImage = json['user_image'];
     userContact = json['user_contact'];
     userAge = json['user_age'];
@@ -92,7 +96,6 @@ class UserDetails {
     userAddress = json['user_address'];
     userVerify = json['user_verify'];
     userBalance = json['user_balance'];
-    userReferalId = json['user_referal_id'];
     createdAt = json['created_at'];
     deletedAt = json['deleted_at'];
   }

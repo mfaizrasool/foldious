@@ -44,215 +44,219 @@ class _SettingPageState extends State<SettingPage> {
         () {
           return controller.isLoading.value
               ? LoadingIndicator()
-              : SafeArea(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: width * 0.05),
-                    child: Column(
-                      children: [
-                        PrimaryListTile(
-                          title:
-                              "${AppLabels.notifications}: ${notificationsController.isLoading.value ? "..." : notificationsController.notificationsModel.unreadCount == null ? "" : notificationsController.notificationsModel.unreadCount! > 9 ? "9+" : "${notificationsController.notificationsModel.unreadCount}"}",
-                          icon: Icons.notifications_none_rounded,
-                          onTap: () {
-                            Get.to(() => const NotificationsPage());
-                          },
-                        ),
-
-                        ///
-                        PrimaryListTile(
-                          title: AppLabels.appearance,
-                          icon: Icons.remove_red_eye_outlined,
-                          onTap: () {
-                            Get.to(() => const AppearanceScreen());
-                          },
-                        ),
-
-                        ///
-                        PrimaryListTile(
-                          title: AppLabels.privacyPolicy,
-                          icon: Icons.privacy_tip_outlined,
-                          onTap: () {
-                            Get.to(() => PrivacyPolicyPage());
-                          },
-                        ),
-
-                        ///
-                        PrimaryListTile(
-                          title: AppLabels.termsAndConditions,
-                          icon: Icons.privacy_tip_outlined,
-                          onTap: () {
-                            Get.to(() => TermsPage());
-                          },
-                        ),
-                        if (userDetailsController.userDetails.userPassword !=
-                                null &&
-                            userDetailsController
-                                .userDetails.userPassword!.isNotEmpty)
-
-                          ///
+              : SingleChildScrollView(
+                  child: SafeArea(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                      child: Column(
+                        children: [
                           PrimaryListTile(
-                            title: AppLabels.changePassword,
-                            icon: Icons.password_rounded,
+                            title:
+                                "${AppLabels.notifications}: ${notificationsController.isLoading.value ? "..." : notificationsController.notificationsModel.unreadCount == null ? "" : notificationsController.notificationsModel.unreadCount! > 9 ? "9+" : "${notificationsController.notificationsModel.unreadCount}"}",
+                            icon: Icons.notifications_none_rounded,
                             onTap: () {
-                              Get.to(() => const ChangePasswordPage());
+                              Get.to(() => const NotificationsPage());
                             },
                           ),
 
-                        ///
-                        ///
-                        PrimaryListTile(
-                          title: AppLabels.deleteAccount,
-                          icon: Icons.delete_outline,
-                          onTap: () {
-                            Get.defaultDialog(
-                              backgroundColor: appTheme.scaffoldBackgroundColor,
-                              title: "",
-                              titlePadding: EdgeInsets.zero,
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 10),
-                              content: Column(
-                                children: [
-                                  Text(
-                                    AppLabels.deleteDescription,
-                                    style: AppTextStyle.bodyLarge.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SizedBox(
-                                    height: 16,
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    height: 40,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: 120,
-                                          height: 40,
-                                          child: PrimaryButton(
-                                            title: "Yes",
-                                            onPressed: () async {
-                                              Get.back();
-                                              await controller.deleteUser();
-                                              await controller.logout();
-                                            },
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Container(
-                                          width: 120,
-                                          height: 40,
-                                          child: PrimaryButton(
-                                            title: "Cancel",
-                                            titleColor: Colors.white,
-                                            backgroundColor: appTheme
-                                                .colorScheme.primaryContainer,
-                                            onPressed: () {
-                                              Get.back();
-                                            },
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
+                          ///
+                          PrimaryListTile(
+                            title: AppLabels.appearance,
+                            icon: Icons.remove_red_eye_outlined,
+                            onTap: () {
+                              Get.to(() => const AppearanceScreen());
+                            },
+                          ),
 
-                        ///
-                        PrimaryListTile(
-                          title: AppLabels.appVersion,
-                          icon: Icons.help_outline_rounded,
-                          onTap: () {
-                            Get.to(() => AppVersionPage());
-                          },
-                        ),
+                          ///
+                          PrimaryListTile(
+                            title: AppLabels.privacyPolicy,
+                            icon: Icons.privacy_tip_outlined,
+                            onTap: () {
+                              Get.to(() => PrivacyPolicyPage());
+                            },
+                          ),
 
-                        ///
-                        PrimaryListTile(
-                          title: AppLabels.referAndEarn,
-                          icon: Icons.help_outline_rounded,
-                          onTap: () {
-                            Get.to(() => ReferAndEarnPage());
-                          },
-                        ),
+                          ///
+                          PrimaryListTile(
+                            title: AppLabels.termsAndConditions,
+                            icon: Icons.privacy_tip_outlined,
+                            onTap: () {
+                              Get.to(() => TermsPage());
+                            },
+                          ),
+                          if (userDetailsController.userDetails.userPassword !=
+                                  null &&
+                              userDetailsController
+                                  .userDetails.userPassword!.isNotEmpty)
 
-                        ///
-                        ///
+                            ///
+                            PrimaryListTile(
+                              title: AppLabels.changePassword,
+                              icon: Icons.password_rounded,
+                              onTap: () {
+                                Get.to(() => const ChangePasswordPage());
+                              },
+                            ),
 
-                        ///
-                        PrimaryListTile(
-                          title: AppLabels.logout,
-                          icon: Icons.logout,
-                          onTap: () async {
-                            Get.defaultDialog(
-                              backgroundColor: appTheme.scaffoldBackgroundColor,
-                              title: "",
-                              titlePadding: EdgeInsets.zero,
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 10),
-                              content: Column(
-                                children: [
-                                  Text(
-                                    AppLabels.logoutDescription,
-                                    style: AppTextStyle.bodyLarge.copyWith(
-                                      fontWeight: FontWeight.bold,
+                          ///
+                          ///
+                          PrimaryListTile(
+                            title: AppLabels.deleteAccount,
+                            icon: Icons.delete_outline,
+                            onTap: () {
+                              Get.defaultDialog(
+                                backgroundColor:
+                                    appTheme.scaffoldBackgroundColor,
+                                title: "",
+                                titlePadding: EdgeInsets.zero,
+                                contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 10),
+                                content: Column(
+                                  children: [
+                                    Text(
+                                      AppLabels.deleteDescription,
+                                      style: AppTextStyle.bodyLarge.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
                                     ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  SizedBox(
-                                    height: 16,
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    height: 40,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: 120,
-                                          height: 40,
-                                          child: PrimaryButton(
-                                            title: "Yes",
-                                            onPressed: () async {
-                                              Get.back();
-                                              await controller.logout();
-                                            },
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Container(
-                                          width: 120,
-                                          height: 40,
-                                          child: PrimaryButton(
-                                            title: "Cancel",
-                                            titleColor: Colors.white,
-                                            backgroundColor: appTheme
-                                                .colorScheme.primaryContainer,
-                                            onPressed: () {
-                                              Get.back();
-                                            },
-                                          ),
-                                        )
-                                      ],
+                                    SizedBox(
+                                      height: 16,
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+                                    Container(
+                                      width: double.infinity,
+                                      height: 40,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: 120,
+                                            height: 40,
+                                            child: PrimaryButton(
+                                              title: "Yes",
+                                              onPressed: () async {
+                                                Get.back();
+                                                await controller.deleteUser();
+                                                await controller.logout();
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Container(
+                                            width: 120,
+                                            height: 40,
+                                            child: PrimaryButton(
+                                              title: "Cancel",
+                                              titleColor: Colors.white,
+                                              backgroundColor: appTheme
+                                                  .colorScheme.primaryContainer,
+                                              onPressed: () {
+                                                Get.back();
+                                              },
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+
+                          ///
+                          PrimaryListTile(
+                            title: AppLabels.appVersion,
+                            icon: Icons.help_outline_rounded,
+                            onTap: () {
+                              Get.to(() => AppVersionPage());
+                            },
+                          ),
+
+                          ///
+                          PrimaryListTile(
+                            title: AppLabels.referAndEarn,
+                            icon: Icons.help_outline_rounded,
+                            onTap: () {
+                              Get.to(() => ReferAndEarnPage());
+                            },
+                          ),
+
+                          ///
+                          ///
+
+                          ///
+                          PrimaryListTile(
+                            title: AppLabels.logout,
+                            icon: Icons.logout,
+                            onTap: () async {
+                              Get.defaultDialog(
+                                backgroundColor:
+                                    appTheme.scaffoldBackgroundColor,
+                                title: "",
+                                titlePadding: EdgeInsets.zero,
+                                contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 10),
+                                content: Column(
+                                  children: [
+                                    Text(
+                                      AppLabels.logoutDescription,
+                                      style: AppTextStyle.bodyLarge.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      height: 40,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: 120,
+                                            height: 40,
+                                            child: PrimaryButton(
+                                              title: "Yes",
+                                              onPressed: () async {
+                                                Get.back();
+                                                await controller.logout();
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Container(
+                                            width: 120,
+                                            height: 40,
+                                            child: PrimaryButton(
+                                              title: "Cancel",
+                                              titleColor: Colors.white,
+                                              backgroundColor: appTheme
+                                                  .colorScheme.primaryContainer,
+                                              onPressed: () {
+                                                Get.back();
+                                              },
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

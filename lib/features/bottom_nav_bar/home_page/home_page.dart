@@ -3,12 +3,16 @@ import 'package:flutter_svg/svg.dart';
 import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/features/bottom_nav_bar/home_page/chart_data.dart';
 import 'package:foldious/features/bottom_nav_bar/home_page/file_types/file_types.dart';
+import 'package:foldious/features/bottom_nav_bar/setting_page/refer/add_referral_dialog.dart';
+import 'package:foldious/features/bottom_nav_bar/setting_page/refer/my_earning_controller.dart';
 import 'package:foldious/utils/app_assets.dart';
 import 'package:foldious/utils/app_labels.dart';
 import 'package:foldious/utils/app_text_styles.dart';
 import 'package:foldious/utils/date_formatter.dart';
 import 'package:foldious/utils/file_types.dart';
+import 'package:foldious/utils/show_snackbar.dart';
 import 'package:foldious/utils/theme/constants/app_constants.dart';
+import 'package:foldious/widgets/loading_image.dart';
 import 'package:foldious/widgets/loading_indicator.dart';
 import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:foldious/widgets/primary_linear_progress.dart';
@@ -26,6 +30,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final HomeController controller = Get.put(HomeController());
   final UserDetailsController userDetailsController = Get.find();
+  final MyEarningController myEarningController =
+      Get.put(MyEarningController());
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +43,23 @@ class _HomePageState extends State<HomePage> {
       return Scaffold(
         appBar: PrimaryAppBar(
           title: userDetailsController.userDetails.userName ?? "",
+          showBackArrowIcon: false,
+          actions: [
+            IconButton(
+              onPressed: () async {
+                if (userDetailsController.userDetails.userReferalId == "0") {
+                  await Get.to(() => AddReferalDialog());
+                  await userDetailsController.getUserDetails();
+                } else {
+                  showErrorMessage("You have already redeemed referal code");
+                }
+              },
+              icon: LoadingImage(
+                imageUrl:
+                    "https://cdn-icons-png.flaticon.com/512/6213/6213799.png",
+              ),
+            )
+          ],
         ),
         body: SafeArea(
           bottom: false,

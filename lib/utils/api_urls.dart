@@ -47,4 +47,6 @@ class ApiUrls {
   /* -------------------------------------------------------------------------- */
   static const String referalListView = "/referal/referal_list_view.php";
   static const String requestWithdraw = "/referal/request_withdraw.php";
+  static const String addReferal = "/referal/add_referal.php";
+  static const String withdrawStatus = "/referal/withdraw_status.php";
 }
