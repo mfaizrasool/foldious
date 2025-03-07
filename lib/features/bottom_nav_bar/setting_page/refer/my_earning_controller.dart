@@ -59,7 +59,7 @@ class MyEarningController extends GetxController {
   }
 
   MyEarningModel myEarning = MyEarningModel();
-  Future<void> getMyEarning() async {
+  Future<void> referalListView() async {
     try {
       isLoading.value = true;
       await Future.delayed(const Duration(seconds: 0));

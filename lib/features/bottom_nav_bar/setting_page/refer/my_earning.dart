@@ -30,7 +30,7 @@ class _MyEarningPageState extends State<MyEarningPage> {
 
   void getData() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      controller.getMyEarning();
+      controller.referalListView();
     });
   }
 
@@ -138,7 +138,7 @@ class _MyEarningPageState extends State<MyEarningPage> {
                                         'You need to have at least 100 PKR to withdraw.');
                                   } else {
                                     await Get.to(() => WithDrawPage());
-                                    await controller.getMyEarning();
+                                    await controller.referalListView();
                                   }
                                 },
                               ),

@@ -1,7 +1,7 @@
 class MyEarningModel {
   bool? status;
   int? earnings;
-  Null totalWithdraw;
+  String? totalWithdraw;
   List<UserData>? userData;
 
   MyEarningModel(
