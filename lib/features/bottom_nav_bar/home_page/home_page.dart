@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
     var screenSize = MediaQuery.sizeOf(context);
     var height = screenSize.height;
     var width = screenSize.width;
+    // final appTheme = Theme.of(context);
 
     return Obx(() {
       return Scaffold(
@@ -70,6 +71,62 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       SizedBox(height: height * 0.02),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                      //   child: Row(
+                      //     children: [
+                      //       Container(
+                      //         width: width * 0.15,
+                      //         height: width * 0.15,
+                      //         decoration: BoxDecoration(
+                      //           shape: BoxShape.circle,
+                      //           color: AppColors.white,
+                      //           boxShadow: [
+                      //             BoxShadow(
+                      //               color:
+                      //                   appTheme.colorScheme.secondaryContainer,
+                      //               blurRadius: 15,
+                      //               offset: const Offset(0, 5),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         clipBehavior: Clip.hardEdge,
+                      //         child: LoadingImage(
+                      //           imageUrl: userDetailsController.userDetails
+                      //                       .userImage?.isNotEmpty ==
+                      //                   true
+                      //               ? ApiUrls.profilePath +
+                      //                   userDetailsController
+                      //                       .userDetails.userImage!
+                      //               : "https://cdn-icons-png.flaticon.com/512/219/219988.png",
+                      //           fit: BoxFit.cover,
+                      //         ),
+                      //       ),
+                      //       SizedBox(width: width * 0.02),
+                      //       Column(
+                      //         children: [
+                      //           Text(
+                      //             userDetailsController.userDetails.userName ??
+                      //                 "",
+                      //             style: AppTextStyle.titleMedium,
+                      //           ),
+
+                      //           ///
+                      //           Text(
+                      //             userDetailsController
+                      //                     .packageDetails.packageName ??
+                      //                 "",
+                      //             style: AppTextStyle.bodySmall,
+                      //           ),
+                      //         ],
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
+
+                      // ///
+                      // ///
+                      // SizedBox(height: height * 0.02),
 
                       /// Doughnut Chart
                       if (controller.chartData.isNotEmpty)
