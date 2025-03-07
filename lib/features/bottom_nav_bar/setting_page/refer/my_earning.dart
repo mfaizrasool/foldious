@@ -20,11 +20,18 @@ class MyEarningPage extends StatefulWidget {
 
 class _MyEarningPageState extends State<MyEarningPage> {
   final UserDetailsController userDetailsController = Get.find();
-  final MyEarningController controller = Get.put(MyEarningController());
+  final MyEarningController controller = Get.find();
 
   @override
   void initState() {
+    getData();
     super.initState();
+  }
+
+  void getData() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.getMyEarning();
+    });
   }
 
   @override

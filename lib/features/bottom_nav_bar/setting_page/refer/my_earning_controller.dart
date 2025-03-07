@@ -55,7 +55,6 @@ class MyEarningController extends GetxController {
 
   @override
   void onInit() {
-    getMyEarning();
     super.onInit();
   }
 

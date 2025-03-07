@@ -13,7 +13,7 @@ class WithdrawStatusPage extends StatefulWidget {
 }
 
 class _WithdrawStatusPageState extends State<WithdrawStatusPage> {
-  final MyEarningController controller = Get.put(MyEarningController());
+  final MyEarningController controller = Get.find();
 
   @override
   void initState() {

@@ -18,7 +18,7 @@ class WithDrawPage extends StatefulWidget {
 
 class _WithDrawPageState extends State<WithDrawPage> {
   final UserDetailsController userDetailsController = Get.find();
-  final MyEarningController controller = Get.put(MyEarningController());
+  final MyEarningController controller = Get.find();
 
   ///
   ///

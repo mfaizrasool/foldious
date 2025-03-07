@@ -12,7 +12,7 @@ import 'package:get/get.dart';
 
 class AddReferalDialog extends StatelessWidget {
   AddReferalDialog({super.key});
-  final MyEarningController controller = Get.put(MyEarningController());
+  final MyEarningController controller = Get.find();
   final UserDetailsController userDetailsController = Get.find();
   final TextEditingController codeController = TextEditingController();
 
