@@ -32,7 +32,11 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
+		<key>NSAllowsArbitraryLoads</key>
+    	<true/>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need access to network data to show Unity Ads.</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>We need access to your Music to save any music files you upload to your cloud storage for easy access.</string>
 	<key>NSMicrophoneUsageDescription</key>

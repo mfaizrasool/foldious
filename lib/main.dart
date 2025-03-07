@@ -29,7 +29,6 @@ class _MyAppState extends State<MyApp> {
 
   ThemeMode themeMode = ThemeMode.system;
 
-
   @override
   void initState() {
     super.initState();
@@ -37,7 +36,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> loadTheme() async {
-
     String? savedTheme = await appPreferencesController.getString(
         key: AppPreferenceLabels.userTheme);
 

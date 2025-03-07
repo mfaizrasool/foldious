@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:foldious/common/ads/ads_controller.dart';
 import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/features/bottom_nav_bar/home_page/chart_data.dart';
 import 'package:foldious/features/bottom_nav_bar/home_page/file_types/file_types.dart';
@@ -30,6 +31,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final HomeController controller = Get.put(HomeController());
   final UserDetailsController userDetailsController = Get.find();
+  UnityAdsController unityAdsController = Get.put(UnityAdsController());
   final MyEarningController myEarningController =
       Get.put(MyEarningController());
 
@@ -71,6 +73,19 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       SizedBox(height: height * 0.02),
+                      ElevatedButton(
+                        onPressed: () {
+                          unityAdsController.loadUnityAd();
+                        },
+                        child: Text("Load Ad"),
+                      ),
+                      SizedBox(height: height * 0.02),
+                      ElevatedButton(
+                        onPressed: () {
+                          unityAdsController.showUnityAd();
+                        },
+                        child: Text("Show Ad"),
+                      ),
                       // Padding(
                       //   padding: const EdgeInsets.symmetric(horizontal: 20),
                       //   child: Row(
