@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
+import 'package:foldious/common/ads/ads_controller.dart';
 import 'package:foldious/common/controllers/preference_controller.dart';
 import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/common/network_client/network_client.dart';
@@ -29,5 +30,6 @@ BindingsBuilder createBindings(BuildContext context) {
     Get.put(AppPreferencesController(), permanent: true);
     Get.put(UserDetailsController(), permanent: true);
     Get.put(NotificationsController(), permanent: true);
+    Get.put(UnityAdsController(), permanent: true);
   });
 }

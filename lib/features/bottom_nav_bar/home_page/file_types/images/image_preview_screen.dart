@@ -202,12 +202,11 @@ class _ImagesPreviewScreenState extends State<ImagesPreviewScreen> {
                   Get.back();
 
                   UnityAdsController unityAdsController = Get.find();
-                  unityAdsController.showUnityAdAndNavigate(() async {
-                    await controller.downloadNetworkImage(
-                      fileUrl: widget.images[currentIndex],
-                      isSharing: true,
-                    );
-                  });
+                  unityAdsController.showUnityAdAndNavigate();
+                  await controller.downloadNetworkImage(
+                    fileUrl: widget.images[currentIndex],
+                    isSharing: true,
+                  );
                 },
               ),
               ListTile(
@@ -220,12 +219,11 @@ class _ImagesPreviewScreenState extends State<ImagesPreviewScreen> {
                 onTap: () async {
                   Get.back();
                   UnityAdsController unityAdsController = Get.find();
-                  unityAdsController.showUnityAdAndNavigate(() async {
-                    await controller.downloadNetworkImage(
-                      fileUrl: widget.images[currentIndex],
-                      isSharing: false,
-                    );
-                  });
+                  unityAdsController.showUnityAdAndNavigate();
+                  await controller.downloadNetworkImage(
+                    fileUrl: widget.images[currentIndex],
+                    isSharing: false,
+                  );
                 },
               ),
             ],

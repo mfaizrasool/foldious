@@ -185,9 +185,8 @@ class _SettingPageState extends State<SettingPage> {
                             onTap: () async {
                               UnityAdsController unityAdsController =
                                   Get.find();
-                              unityAdsController.showUnityAdAndNavigate(() {
-                                Get.to(() => ReferAndEarnPage());
-                              });
+                              unityAdsController.showUnityAdAndNavigate();
+                              Get.to(() => ReferAndEarnPage());
                             },
                           ),
 

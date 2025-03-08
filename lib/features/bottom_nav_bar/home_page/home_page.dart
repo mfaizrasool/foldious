@@ -31,7 +31,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final HomeController controller = Get.put(HomeController());
   final UserDetailsController userDetailsController = Get.find();
-  UnityAdsController unityAdsController = Get.put(UnityAdsController());
+  UnityAdsController unityAdsController = Get.find();
   final MyEarningController myEarningController =
       Get.put(MyEarningController());
 
@@ -51,14 +51,13 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               onPressed: () async {
                 UnityAdsController unityAdsController = Get.find();
-                unityAdsController.showUnityAdAndNavigate(() async {
-                  if (userDetailsController.userDetails.userReferalId == "0") {
-                    await Get.to(() => AddReferalDialog());
-                    await userDetailsController.getUserDetails();
-                  } else {
-                    showErrorMessage("You have already redeemed referal code");
-                  }
-                });
+                unityAdsController.showUnityAdAndNavigate();
+                if (userDetailsController.userDetails.userReferalId == "0") {
+                  await Get.to(() => AddReferalDialog());
+                  await userDetailsController.getUserDetails();
+                } else {
+                  showErrorMessage("You have already redeemed referal code");
+                }
               },
               icon: LoadingImage(
                 imageUrl:
@@ -76,63 +75,6 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     children: [
                       SizedBox(height: height * 0.02),
-
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(horizontal: 20),
-                      //   child: Row(
-                      //     children: [
-                      //       Container(
-                      //         width: width * 0.15,
-                      //         height: width * 0.15,
-                      //         decoration: BoxDecoration(
-                      //           shape: BoxShape.circle,
-                      //           color: AppColors.white,
-                      //           boxShadow: [
-                      //             BoxShadow(
-                      //               color:
-                      //                   appTheme.colorScheme.secondaryContainer,
-                      //               blurRadius: 15,
-                      //               offset: const Offset(0, 5),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //         clipBehavior: Clip.hardEdge,
-                      //         child: LoadingImage(
-                      //           imageUrl: userDetailsController.userDetails
-                      //                       .userImage?.isNotEmpty ==
-                      //                   true
-                      //               ? ApiUrls.profilePath +
-                      //                   userDetailsController
-                      //                       .userDetails.userImage!
-                      //               : "https://cdn-icons-png.flaticon.com/512/219/219988.png",
-                      //           fit: BoxFit.cover,
-                      //         ),
-                      //       ),
-                      //       SizedBox(width: width * 0.02),
-                      //       Column(
-                      //         children: [
-                      //           Text(
-                      //             userDetailsController.userDetails.userName ??
-                      //                 "",
-                      //             style: AppTextStyle.titleMedium,
-                      //           ),
-
-                      //           ///
-                      //           Text(
-                      //             userDetailsController
-                      //                     .packageDetails.packageName ??
-                      //                 "",
-                      //             style: AppTextStyle.bodySmall,
-                      //           ),
-                      //         ],
-                      //       )
-                      //     ],
-                      //   ),
-                      // ),
-
-                      // ///
-                      // ///
-                      // SizedBox(height: height * 0.02),
 
                       /// Doughnut Chart
                       if (controller.chartData.isNotEmpty)

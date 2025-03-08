@@ -89,9 +89,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 icon: const Icon(Icons.download),
                 onPressed: () {
                   UnityAdsController unityAdsController = Get.find();
-                  unityAdsController.showUnityAdAndNavigate(() {
-                    controller.saveNetworkVideoFile(widget.fileUrl);
-                  });
+                  unityAdsController.showUnityAdAndNavigate();
+                  controller.saveNetworkVideoFile(widget.fileUrl);
                 })
           ],
         ),

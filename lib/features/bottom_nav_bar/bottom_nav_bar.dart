@@ -72,7 +72,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
               } else if (index == 2) {
                 print("index == $index");
                 UnityAdsController unityAdsController = Get.find();
-                unityAdsController.showUnityAdAndNavigate(() {});
+                unityAdsController.showUnityAdAndNavigate();
               }
             },
             tabs: [

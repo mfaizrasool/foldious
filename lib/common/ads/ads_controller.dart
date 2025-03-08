@@ -19,76 +19,96 @@ class UnityAdsController extends GetxController {
 
   /// Initialize Unity Ads
   void initializeUnityAds() {
-    UnityAds.init(
-      gameId: gameId,
-      testMode: false,
-      onComplete: () {
-        isInitialized.value = true;
-        print('Unity Ads Initialized Successfully');
-        loadUnityAd();
-      },
-      onFailed: (error, message) {
-        isInitialized.value = false;
-        print('Unity Ads Initialization Failed: $error $message');
-      },
-    );
+    try {
+      UnityAds.init(
+        gameId: gameId,
+        testMode: false,
+        onComplete: () {
+          isInitialized.value = true;
+          print('Unity Ads Initialized Successfully');
+          loadUnityAd();
+        },
+        onFailed: (error, message) {
+          isInitialized.value = false;
+          print('Unity Ads Initialization Failed: $error $message');
+        },
+      );
+    } catch (e) {
+      print('Error initializing Unity Ads: $e');
+    }
   }
 
   /// Load Unity Ad
   void loadUnityAd() {
-    if (!isInitialized.value) {
-      print('Unity Ads not initialized. Cannot load ad.');
-      return;
-    }
+    try {
+      if (!isInitialized.value) {
+        print('Unity Ads not initialized. Cannot load ad.');
+        return;
+      }
 
-    UnityAds.load(
-      placementId: placementId,
-      onComplete: (placementId) {
-        isAdReady.value = true;
-        print('Unity Ad Loaded Successfully: $placementId');
-      },
-      onFailed: (placementId, error, message) {
-        isAdReady.value = false;
-        print('Unity Ad Load Failed: $placementId - $error - $message');
-      },
-    );
+      UnityAds.load(
+        placementId: placementId,
+        onComplete: (placementId) {
+          isAdReady.value = true;
+          print('Unity Ad Loaded Successfully: $placementId');
+        },
+        onFailed: (placementId, error, message) {
+          isAdReady.value = false;
+          print('Unity Ad Load Failed: $placementId - $error - $message');
+        },
+      );
+    } catch (e) {
+      print('Error loading Unity Ad: $e');
+    }
   }
 
   /// Show Unity Ad and trigger the navigation callback after the ad is shown
-  void showUnityAdAndNavigate(Function onAdComplete) {
-    if (!isInitialized.value) {
-      print('Unity Ads not initialized.');
-      return;
-    }
+  void showUnityAdAndNavigate() {
+    try {
+      if (!isInitialized.value) {
+        print('Unity Ads not initialized.');
+        initializeUnityAds();
+        return;
+      }
 
-    if (!isAdReady.value) {
-      print('Ad not ready. Loading a new one...');
-      loadUnityAd();
-      return;
+      if (!isAdReady.value) {
+        print('Ad not ready. Loading a new one...');
+        loadUnityAd();
+        showAd();
+        return;
+      } else {
+        loadUnityAd();
+        showAd();
+      }
+    } catch (e) {
+      print('Error showing Unity Ad: $e');
     }
+  }
 
-    UnityAds.showVideoAd(
-      placementId: placementId,
-      onStart: (placementId) => print('Video Ad Started: $placementId'),
-      onClick: (placementId) => print('Video Ad Clicked: $placementId'),
-      onSkipped: (placementId) {
-        isAdReady.value = false;
-        print('Video Ad Skipped: $placementId');
-        loadUnityAd();
-        onAdComplete(); // Navigate after skipping ad
-      },
-      onComplete: (placementId) {
-        isAdReady.value = false;
-        print('Video Ad Completed: $placementId');
-        loadUnityAd();
-        onAdComplete(); // Navigate after ad completes
-      },
-      onFailed: (placementId, error, message) {
-        isAdReady.value = false;
-        print('Video Ad Failed: $placementId - $error - $message');
-        loadUnityAd();
-        onAdComplete(); // Navigate even if the ad fails
-      },
-    );
+  Future<void> showAd() async {
+    try {
+      await UnityAds.showVideoAd(
+        placementId: placementId,
+        onStart: (placementId) => print('Video Ad Started: $placementId'),
+        onClick: (placementId) => print('Video Ad Clicked: $placementId'),
+        onSkipped: (placementId) {
+          isAdReady.value = false;
+          print('Video Ad Skipped: $placementId');
+          loadUnityAd();
+        },
+        onComplete: (placementId) {
+          isAdReady.value = false;
+          print('Video Ad Completed: $placementId');
+          loadUnityAd();
+        },
+        onFailed: (placementId, error, message) {
+          isAdReady.value = false;
+          print('Video Ad Failed: $placementId - $error - $message');
+          loadUnityAd();
+        },
+      );
+    } catch (e) {
+      print('Error showing video ad: $e');
+    }
   }
 }
