@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foldious/common/ads/ads_controller.dart';
 import 'package:foldious/common/controllers/get_files_controller.dart';
 import 'package:foldious/features/bottom_nav_bar/home_page/home_page.dart';
 import 'package:foldious/features/bottom_nav_bar/setting_page/notifications/notification_setup.dart';
@@ -69,10 +68,6 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
                 await fileTypeController.getTrashFiles(
                   showpaginationLoader: false,
                 );
-              } else if (index == 2) {
-                print("index == $index");
-                UnityAdsController unityAdsController = Get.find();
-                unityAdsController.showUnityAdAndNavigate();
               }
             },
             tabs: [

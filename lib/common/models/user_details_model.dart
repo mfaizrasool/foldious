@@ -14,13 +14,18 @@ class User {
   FolderDetails? folderDetails;
   StorageDetails? storageDetails;
   TransactionDetails? transactionDetails;
+  String? referalAmount;
+  String? minWithdraw;
 
-  User(
-      {this.userDetails,
-      this.packageDetails,
-      this.folderDetails,
-      this.storageDetails,
-      this.transactionDetails});
+  User({
+    this.userDetails,
+    this.packageDetails,
+    this.folderDetails,
+    this.storageDetails,
+    this.transactionDetails,
+    this.referalAmount,
+    this.minWithdraw,
+  });
 
   User.fromJson(Map<String, dynamic> json) {
     userDetails = json['user_details'] != null
@@ -38,6 +43,8 @@ class User {
     transactionDetails = json['transaction_details'] != null
         ? new TransactionDetails.fromJson(json['transaction_details'])
         : null;
+    referalAmount = json['referal_amount'];
+    minWithdraw = json['min_withdraw'];
   }
 }
 

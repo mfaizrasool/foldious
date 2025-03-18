@@ -99,7 +99,7 @@ class _ReferAndEarnPageState extends State<ReferAndEarnPage> {
                         ),
                       ),
                       Text(
-                        "Share the link above to earn 10 PKR for every account that joins. Just click 'Copy,' then paste and share the link anywhere. You can withdraw your earnings once you reach a minimum of 100 PKR.",
+                        "Share the link above to earn ${userDetailsController.userDetailsModel.user?.referalAmount} for every account that joins. Just click 'Copy,' then paste and share the link anywhere. You can withdraw your earnings once you reach a minimum of ${userDetailsController.userDetailsModel.user?.minWithdraw}.",
                         style: AppTextStyle.bodyMedium,
                         textAlign: TextAlign.center,
                       ),

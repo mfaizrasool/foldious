@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:dio/dio.dart' as dio;
 import 'package:file_picker/file_picker.dart';
+import 'package:foldious/common/ads/ads_controller.dart';
 import 'package:foldious/common/controllers/user_details_controller.dart';
 import 'package:foldious/common/network_client/network_client.dart';
 import 'package:foldious/utils/api_urls.dart';
@@ -144,6 +145,8 @@ class UploadController extends GetxController {
 
   Future<void> _uploadFile(int index, File file) async {
     try {
+      UnityAdsController unityAdsController = Get.find();
+      unityAdsController.showUnityAdAndNavigate();
       final fileLength = file.lengthSync();
       const int chunkSize = 1 * 1024 * 1024;
       final int totalChunks = (fileLength / chunkSize).ceil();
