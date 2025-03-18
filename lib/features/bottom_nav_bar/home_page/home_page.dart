@@ -19,6 +19,7 @@ import 'package:foldious/widgets/primary_appbar.dart';
 import 'package:foldious/widgets/primary_linear_progress.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 
 import 'home_controller.dart';
 
@@ -74,6 +75,23 @@ class _HomePageState extends State<HomePage> {
               : SingleChildScrollView(
                   child: Column(
                     children: [
+                      SizedBox(height: height * 0.02),
+                      UnityBannerAd(
+                        placementId: unityAdsController.bannerPlacementId,
+                        onLoad: (placementId) {
+                          print('Banner loaded: $placementId');
+                        },
+                        onClick: (placementId) {
+                          print('Banner clicked: $placementId');
+                        },
+                        onShown: (placementId) {
+                          print('Banner shown: $placementId');
+                        },
+                        onFailed: (placementId, error, message) {
+                          print(
+                              'Banner Ad $placementId failed: $error $message');
+                        },
+                      ),
                       SizedBox(height: height * 0.02),
 
                       /// Doughnut Chart

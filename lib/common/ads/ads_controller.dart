@@ -8,8 +8,12 @@ class UnityAdsController extends GetxController {
   var isAdReady = false.obs;
 
   final String gameId = Platform.isAndroid ? '5809018' : '5809019';
-  final String placementId =
+  final String interstitialPlacementId =
       Platform.isAndroid ? 'Interstitial_Android' : 'Interstitial_iOS';
+
+  ///
+  final String bannerPlacementId =
+      Platform.isAndroid ? 'Banner_Android' : 'Banner_iOS';
 
   @override
   void onInit() {
@@ -26,7 +30,8 @@ class UnityAdsController extends GetxController {
         onComplete: () {
           isInitialized.value = true;
           print('Unity Ads Initialized Successfully');
-          loadUnityAd();
+          loadUnityAd(placementId: interstitialPlacementId);
+          loadUnityAd(placementId: bannerPlacementId);
         },
         onFailed: (error, message) {
           isInitialized.value = false;
@@ -39,7 +44,7 @@ class UnityAdsController extends GetxController {
   }
 
   /// Load Unity Ad
-  void loadUnityAd() {
+  void loadUnityAd({required String placementId}) {
     try {
       if (!isInitialized.value) {
         print('Unity Ads not initialized. Cannot load ad.');
@@ -73,11 +78,11 @@ class UnityAdsController extends GetxController {
 
       if (!isAdReady.value) {
         print('Ad not ready. Loading a new one...');
-        loadUnityAd();
+        loadUnityAd(placementId: interstitialPlacementId);
         showAd();
         return;
       } else {
-        loadUnityAd();
+        loadUnityAd(placementId: interstitialPlacementId);
         showAd();
       }
     } catch (e) {
@@ -88,23 +93,23 @@ class UnityAdsController extends GetxController {
   Future<void> showAd() async {
     try {
       await UnityAds.showVideoAd(
-        placementId: placementId,
+        placementId: interstitialPlacementId,
         onStart: (placementId) => print('Video Ad Started: $placementId'),
         onClick: (placementId) => print('Video Ad Clicked: $placementId'),
         onSkipped: (placementId) {
           isAdReady.value = false;
           print('Video Ad Skipped: $placementId');
-          loadUnityAd();
+          loadUnityAd(placementId: interstitialPlacementId);
         },
         onComplete: (placementId) {
           isAdReady.value = false;
           print('Video Ad Completed: $placementId');
-          loadUnityAd();
+          loadUnityAd(placementId: interstitialPlacementId);
         },
         onFailed: (placementId, error, message) {
           isAdReady.value = false;
           print('Video Ad Failed: $placementId - $error - $message');
-          loadUnityAd();
+          loadUnityAd(placementId: interstitialPlacementId);
         },
       );
     } catch (e) {
