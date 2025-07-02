@@ -61,7 +61,7 @@ final lightTheme = ThemeData.light().copyWith(
   iconTheme: const IconThemeData(
     color: AppLightThemeColors.iconColor,
   ),
-  tabBarTheme: TabBarTheme(
+  tabBarTheme: TabBarThemeData(
     labelStyle: AppTextStyle.bodyMedium.copyWith(
       fontWeight: FontWeight.w600,
       color: AppLightThemeColors.primaryTextColor,

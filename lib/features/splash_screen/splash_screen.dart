@@ -48,10 +48,8 @@ class _SplashScreenState extends State<SplashScreen> {
         if (userDetailsController.userDetails.deletedAt != null &&
             userDetailsController.userDetails.deletedAt!.isNotEmpty) {
           Get.off(() => const LoginScreen());
-          GoogleSignIn googleSignIn = GoogleSignIn();
-          if (await googleSignIn.isSignedIn()) {
-            await googleSignIn.signOut();
-          }
+          GoogleSignIn googleSignIn = GoogleSignIn.instance;
+          await googleSignIn.signOut();
           AppPreferencesController()
               .deleteString(key: AppPreferenceLabels.userId);
 

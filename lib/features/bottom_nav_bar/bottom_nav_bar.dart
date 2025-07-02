@@ -54,7 +54,6 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
       body: Stack(
         children: [
           PersistentTabView(
-            navBarHeight: height * 0.08,
             navBarBuilder: (navBarConfig) =>
                 Style14BottomNavBar(navBarConfig: navBarConfig),
             onTabChanged: (index) async {

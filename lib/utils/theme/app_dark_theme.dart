@@ -66,7 +66,7 @@ final darkTheme = ThemeData.dark().copyWith(
   iconTheme: const IconThemeData(
     color: AppDarkThemeColors.iconColor,
   ),
-  tabBarTheme: TabBarTheme(
+  tabBarTheme: TabBarThemeData(
     labelStyle: AppTextStyle.bodyMedium.copyWith(
       fontWeight: FontWeight.w600,
       color: AppDarkThemeColors.primaryTextColor,

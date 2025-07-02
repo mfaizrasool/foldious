@@ -12,10 +12,8 @@ class SettingsController extends GetxController {
 
   Future<void> logout() async {
     isLoading.value = true;
-    GoogleSignIn googleSignIn = GoogleSignIn();
-    if (await googleSignIn.isSignedIn()) {
-      await googleSignIn.signOut();
-    }
+    GoogleSignIn googleSignIn = GoogleSignIn.instance;
+    await googleSignIn.signOut();
 
     AppPreferencesController().deleteString(key: AppPreferenceLabels.userId);
 

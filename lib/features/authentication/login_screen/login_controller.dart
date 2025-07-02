@@ -109,17 +109,22 @@ class LoginController extends GetxController {
   /*                                 googleSign                                 */
   /* -------------------------------------------------------------------------- */
   ///
-  GoogleSignIn googleSignIn = GoogleSignIn();
+  final GoogleSignIn googleSignIn = GoogleSignIn.instance;
   void googleSign() async {
     try {
-      var googleUser = await googleSignIn.signIn();
-      if (googleUser != null) {
-        login(email: googleUser.email, isSocial: 1);
+      if (GoogleSignIn.instance.supportsAuthenticate()) {
+        final GoogleSignInAccount? user =
+            await GoogleSignIn.instance.authenticate();
+        if (user != null) {
+          login(email: user.email, isSocial: 1);
+        } else {
+          showErrorMessage("Please Select Google Account To Continue");
+        }
       } else {
-        showErrorMessage("Please Select Google Account To Continue");
+        showErrorMessage("Google Sign-In not supported on this platform.");
       }
     } catch (e) {
-      print("error ${e.toString()}");
+      print("error \\${e.toString()}");
       showErrorMessage(e.toString());
     }
   }
