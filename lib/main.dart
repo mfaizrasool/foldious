@@ -6,6 +6,7 @@ import 'package:foldious/features/splash_screen/splash_screen.dart';
 import 'package:foldious/firebase_options.dart';
 import 'package:foldious/utils/preference_labels.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'utils/theme/app_dark_theme.dart';
 import 'utils/theme/app_light_theme.dart';
@@ -13,6 +14,7 @@ import 'utils/theme/app_light_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await GoogleSignIn.instance.initialize();
   runApp(MyApp());
 }
 

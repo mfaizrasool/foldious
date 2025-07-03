@@ -109,7 +109,6 @@ class LoginController extends GetxController {
   /*                                 googleSign                                 */
   /* -------------------------------------------------------------------------- */
   ///
-  final GoogleSignIn googleSignIn = GoogleSignIn.instance;
   void googleSign() async {
     try {
       if (GoogleSignIn.instance.supportsAuthenticate()) {
@@ -153,6 +152,22 @@ class LoginController extends GetxController {
       await login(email: userCredential.user!.email!, isSocial: 1);
     } else {
       print("Sign-in failed, but no exception was thrown.");
+    }
+  }
+
+  ///
+  /// Silent sign-in for auto-login functionality
+  ///
+  Future<void> silentSignIn() async {
+    try {
+      final GoogleSignInAccount? user =
+          await GoogleSignIn.instance.attemptLightweightAuthentication();
+      if (user != null) {
+        await login(email: user.email, isSocial: 1);
+      }
+    } catch (e) {
+      print("Silent sign-in error: ${e.toString()}");
+      // Silent sign-in failed, user needs to manually sign in
     }
   }
 }

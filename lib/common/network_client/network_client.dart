@@ -5,6 +5,7 @@ import 'dart:math' as math;
 import 'package:dio/dio.dart';
 import 'package:foldious/common/network_client/api_response.dart';
 import 'package:foldious/utils/api_urls.dart';
+import 'package:foldious/utils/error_handler.dart';
 import 'package:image_picker/image_picker.dart';
 
 typedef GetUserAuthTokenCallback = Future<String?> Function();
@@ -302,27 +303,48 @@ class NetworkClient {
 
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
+        ErrorHandler().handleError(
+          ErrorHandler.networkError('Connection timed out'),
+          showSnackbar: false,
+        );
         return ApiResponse<T>.error(
           statusCode: 501,
           message: 'Connection timed out',
         );
       case DioExceptionType.connectionError:
+        ErrorHandler().handleError(
+          ErrorHandler.networkError('Connection Error'),
+          showSnackbar: false,
+        );
         return ApiResponse<T>.error(
           statusCode: 502,
           message: 'Connection Error',
         );
       case DioExceptionType.unknown:
+        ErrorHandler().handleError(
+          ErrorHandler.networkError(
+              'Something went wrong, check your internet connection and try again later'),
+          showSnackbar: false,
+        );
         return ApiResponse<T>.error(
           statusCode: 503,
           message:
               'Something went wrong, check your internet connection and try again later',
         );
       case DioExceptionType.receiveTimeout:
+        ErrorHandler().handleError(
+          ErrorHandler.networkError('Receive timed out'),
+          showSnackbar: false,
+        );
         return ApiResponse<T>.error(
           statusCode: 502,
           message: 'Receive timed out',
         );
       case DioExceptionType.sendTimeout:
+        ErrorHandler().handleError(
+          ErrorHandler.networkError('Failed to connect to server'),
+          showSnackbar: false,
+        );
         return ApiResponse<T>.error(
           statusCode: 500,
           message: 'Failed to connect to server',
@@ -339,17 +361,49 @@ class NetworkClient {
         print("errorStr == $errorStr");
         print("message == $message");
 
+        // Handle different HTTP status codes
+        final statusCode = error.response?.statusCode;
+        if (statusCode == 401) {
+          ErrorHandler().handleError(
+            ErrorHandler.authenticationError(message),
+            showSnackbar: false,
+          );
+        } else if (statusCode == 403) {
+          ErrorHandler().handleError(
+            ErrorHandler.permissionError(message),
+            showSnackbar: false,
+          );
+        } else if (statusCode! >= 500) {
+          ErrorHandler().handleError(
+            ErrorHandler.serverError(message),
+            showSnackbar: false,
+          );
+        } else {
+          ErrorHandler().handleError(
+            ErrorHandler.validationError(message),
+            showSnackbar: false,
+          );
+        }
+
         return ApiResponse<T>.error(
-          statusCode: error.response?.statusCode,
+          statusCode: statusCode,
           error: errorStr,
           message: message,
         );
       case DioExceptionType.cancel:
+        ErrorHandler().handleError(
+          ErrorHandler.networkError('Request canceled'),
+          showSnackbar: false,
+        );
         return ApiResponse<T>.error(
           statusCode: 500,
           message: 'Request canceled',
         );
       case DioExceptionType.badCertificate:
+        ErrorHandler().handleError(
+          ErrorHandler.networkError('Bad Certificate'),
+          showSnackbar: false,
+        );
         return ApiResponse<T>.error(
           statusCode: 500,
           message: 'Bad Certificate',
