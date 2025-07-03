@@ -279,8 +279,13 @@ class FileTypeController extends GetxController {
       // Save to gallery
       await ImageGallerySaverPlus.saveFile(filePath);
 
+      final params = ShareParams(
+        text: 'Great picture',
+        files: [XFile(filePath)],
+      );
+
       // Share file
-      if (isSharing == true) await Share.shareXFiles([XFile(filePath)]);
+      if (isSharing == true) await SharePlus.instance.share(params);
     } finally {
       isDownloading.value = false;
       downloadProgress.value = 0.0;

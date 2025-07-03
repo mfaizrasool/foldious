@@ -108,8 +108,9 @@ class _ReferAndEarnPageState extends State<ReferAndEarnPage> {
                         onPressed: () async {
                           String copiedText =
                               "Referral code: ${userDetailsController.userDetails.userId} \n\nPlay Store: https://play.google.com/store/apps/details?id=com.foldious.storage\n\n\nApp Store: https://apps.apple.com/us/app/foldious-cloud-storage/id6742392762";
-
-                          await Share.share(copiedText);
+                          await SharePlus.instance.share(
+                            ShareParams(text: copiedText),
+                          );
                         },
                       ),
                       PrimaryButton(
