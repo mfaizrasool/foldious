@@ -21,7 +21,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # version: 1.0.5+1
 
 # for android
-version: 1.0.12+13
+version: 1.0.13+14
 
 
 environment:
